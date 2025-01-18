@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "vector"
 #include "iostream"
+#include "MyVector.h"
 
 class Actor : public Component
 {
@@ -9,7 +10,8 @@ private:
 	std::vector<Component*> components;
 
 	// Transform data. Didn't create transform component as the scope of the project won't have any actor without position info
-	float posX, posY;
+protected:
+	Vec2 position;
 	float rotation;    // in radians
 	float scale;
 
@@ -30,8 +32,8 @@ public:
 	void ListComponents()const;
 
 	// Transform methods
-	void SetPosition(float x_, float y_) { posX = x_; posY = y_; }
-	void GetPosition(float& x_, float& y_) const { x_ = posX; y_ = posY; }
+	void SetPosition(float x_, float y_) { position.x = x_; position.y = y_; }
+	Vec2 GetPosition() const { return position; }
 	void SetRotation(float rotation_) { rotation = rotation_; }
 	float GetRotation() const { return rotation; }
 	void SetScale(float scale_) { scale = scale_; }

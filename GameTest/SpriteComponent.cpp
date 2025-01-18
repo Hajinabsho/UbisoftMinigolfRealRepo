@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "SpriteComponent.h"
 #include "Actor.h"
-#include "app\app.h"
 
-SpriteComponent::SpriteComponent(Component* parent_) :
-    Component(parent_),
-    sprite(nullptr) {
+
+SpriteComponent::SpriteComponent(Component* parent_) : Component(parent_)
+{
+    sprite = nullptr;
+
 }
 
 SpriteComponent::~SpriteComponent() {
@@ -17,10 +18,14 @@ bool SpriteComponent::LoadSprite(const char* filename, int columns, int rows) {
         delete sprite;
     }
     sprite = App::CreateSprite(filename, columns, rows);
+   
+
     return sprite != nullptr;
 }
 
 bool SpriteComponent::OnCreate() {
+
+
     return true;
 }
 
@@ -32,18 +37,25 @@ void SpriteComponent::OnDestroy() {
 }
 
 void SpriteComponent::Update(const float deltaTime_) {
-    if (!sprite) return;
 
-    // Update sprite transform from parent actor
-    if (Actor* actor = dynamic_cast<Actor*>(parent)) {
-        float x, y;
-        actor->GetPosition(x, y);
-        sprite->SetPosition(x, y);
-        sprite->SetAngle(actor->GetRotation());
-        sprite->SetScale(actor->GetScale());
+    if (sprite) {
+        sprite->Update(deltaTime_);
     }
 
-    sprite->Update(deltaTime_);
+
+    //if (!sprite) return;
+
+    //// Update sprite transform from parent actor
+    //if (Actor* actor = dynamic_cast<Actor*>(parent)) {
+    //    Vec2 position = actor->GetPosition();
+    //    sprite->SetPosition(position.x, position.y);
+    //    sprite->SetAngle(actor->GetRotation());
+    //    sprite->SetScale(actor->GetScale());
+    //}
+    //else {
+    //    std::cout << "Actor Cast Faield Sprite Component" << '\n';
+    //}
+
 }
 
 void SpriteComponent::Render() const {
@@ -86,10 +98,55 @@ float SpriteComponent::GetWidth() const {
     return sprite ? sprite->GetWidth() : 0.0f;
 }
 
+void SpriteComponent::SetPosition(float x, float y)
+{
+    if (sprite) {
+        sprite->SetPosition(x, y);
+    }
+}
+
+void SpriteComponent::SetRotation(float angle)
+{
+    if (sprite) {
+        sprite->SetAngle(angle);
+    }
+}
+
+void SpriteComponent::SetScale(float scale)
+{
+    if (sprite) {
+        sprite->SetScale(scale);
+    }
+}
+
 float SpriteComponent::GetHeight() const {
     return sprite ? sprite->GetHeight() : 0.0f;
 }
 
+float SpriteComponent::GetRotation() const
+{
+    return sprite->GetAngle();
+}
+
+float SpriteComponent::GetScale() const
+{
+    return sprite->GetScale();
+}
+
+//void SpriteComponent::GetPosition(float& x, float& y) const
+//{
+//    sprite->GetPosition(x, y);
+//}
+
 CSimpleSprite* SpriteComponent::GetSprite() const {
     return sprite;
+}
+
+void SpriteComponent::SetSprite(CSimpleSprite* existingSprite)
+{
+    if (sprite != nullptr && sprite != existingSprite) 
+    {
+          delete sprite;  // Delete old sprite if it exists and is different
+    }
+    sprite = existingSprite;  // Point to the existing sprite
 }

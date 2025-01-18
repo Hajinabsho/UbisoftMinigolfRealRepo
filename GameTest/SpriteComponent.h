@@ -1,13 +1,13 @@
 #pragma once
 #include "Component.h"
 #include "App/SimpleSprite.h"
-
+#include "app\app.h"
 
 //Wrapper class of a Simple Sprite so its coherent as a Actor Component System.
 class SpriteComponent : public Component {
 private:
     CSimpleSprite* sprite;
-
+    float x, y;
 public:
     SpriteComponent(Component* parent_);
     virtual ~SpriteComponent();
@@ -25,15 +25,31 @@ public:
     void CreateAnimation(unsigned int id, float speed, const std::vector<int>& frames);
     void SetAnimation(int id);
     void SetAnimation(int id, bool playFromStart);
+    // Frame methods
+    void SetFrame(unsigned int frame);
 
     // Color methods
     void SetColor(float r, float g, float b);
 
-    // Frame methods
-    void SetFrame(unsigned int frame);
+  
 
     // Getters
     float GetWidth() const;
     float GetHeight() const;
+   
+
+    // Transform Methods
+    void SetPosition(float x, float y);
+    void SetRotation(float angle);
+    void SetScale(float scale);
+    
+    float GetRotation() const;
+    float GetScale() const;
+
+   // float GetPosition(float& x, float& y) const;
+
+
+
     CSimpleSprite* GetSprite() const;
+    void SetSprite(CSimpleSprite* existingSprite);
 };

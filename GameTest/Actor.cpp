@@ -4,8 +4,7 @@
 
 Actor::Actor(Component* parent_) :Component(parent_)
 {
-	posX = 0.0f;
-	posY = 0.0f;
+	position = Vec2(0.0f, 0.0f);
 	rotation = 0.0f;
 	scale = 1.0f;
 }

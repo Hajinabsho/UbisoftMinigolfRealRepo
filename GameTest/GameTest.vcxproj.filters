@@ -36,6 +36,28 @@
     <ClCompile Include="Scene0.cpp">
       <Filter>MyGame\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>MyGame\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>MyGame\GamePattern</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxSystem.cpp">
+      <Filter>MyGame\GamePattern</Filter>
+    </ClCompile>
+    <ClCompile Include="MyVector.cpp">
+      <Filter>MyGame\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>MyGame\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>MyGame\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="GolfBall.cpp">
+      <Filter>MyGame\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -81,6 +103,31 @@
     <ClInclude Include="Scene0.h">
       <Filter>MyGame\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>MyGame\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>MyGame\GamePattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>MyGame\GamePattern</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxSystem.h">
+      <Filter>MyGame\GamePattern</Filter>
+    </ClInclude>
+    <ClInclude Include="MyVector.h">
+      <Filter>MyGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>MyGame\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>MyGame\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="GolfBall.h">
+      <Filter>MyGame\Actors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -103,6 +150,15 @@
     </Filter>
     <Filter Include="MyGame\Scenes">
       <UniqueIdentifier>{e5a9482e-b3db-4f51-9a63-72bfc7f20a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Actors">
+      <UniqueIdentifier>{be112b36-2864-446a-85cc-2486fd6e2755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\GamePattern">
+      <UniqueIdentifier>{23414a23-126c-47d0-bcff-05c824f5c5c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Math">
+      <UniqueIdentifier>{a3059fbc-afd0-4dad-ba49-a997e015ca81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
