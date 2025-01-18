@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
-#include "MyVector.h"
+#include "VectorMath.h"
+#include "PhysicsUtility.h"
 
 /// <summary>
 /// This will be in charge of object's physics movement. Especially for the player.
@@ -23,6 +24,9 @@ private:
     bool useGravity;
     float gravity;
 
+    //Arcady
+    float bounceFactor;
+
 public:
     PhysicsComponent(Component* parent_);
     virtual ~PhysicsComponent();
@@ -36,6 +40,16 @@ public:
 
     void ApplyForce(const Vec2& force_);
     void ApplyAngularForce(float torque);
+
+    //I'm gonna calculate the normal dir of the collision and then apply velocity or force to the self object
+    void HandleCollision(const Vec2& normal);
+    Vec2 CalculateCollisionNormal(const PhysicsUtility::CollisionInfo& info);
+
+
+
+
+
+
 
     // Getters and setters
     void SetPosition(const Vec2& pos) { position = pos; }

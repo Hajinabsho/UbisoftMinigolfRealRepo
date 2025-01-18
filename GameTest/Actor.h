@@ -22,17 +22,21 @@ public:
 	virtual ~Actor();
 
 
+
 	bool OnCreate() override;
 	void OnDestroy() override;
 	void Update(const float deltaTime_) override;
 	void Render()const override;
+
+	// Optional collision handler with empty default implementation
+	virtual void OnCollision(Actor& other, Actor& otherActor) { }
 
 	void AddComponent(Component* component_);
 	void RemoveComponent(Component* component_);
 	void ListComponents()const;
 
 	// Transform methods
-	void SetPosition(float x_, float y_) { position.x = x_; position.y = y_; }
+	void SetPosition(const Vec2& pos_) { position = pos_; }
 	Vec2 GetPosition() const { return position; }
 	void SetRotation(float rotation_) { rotation = rotation_; }
 	float GetRotation() const { return rotation; }

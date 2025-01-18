@@ -65,6 +65,7 @@ void TileMap::Update(const float deltaTime_)
         if (tile) {
             tile->Update(deltaTime_);  // This will call render on all tile components including sprite
             tile->GetComponent<SpriteComponent>()->Update(deltaTime_);
+            //tile->GetComponent<HitboxComponent>()->Update(deltaTime_);
         }
     }
 
@@ -93,7 +94,8 @@ void TileMap::CreateTile(int x, int y, TileType type)
 
     float worldX = x * TILE_SIZE;
     float worldY = (MAP_HEIGHT - y - 1) * TILE_SIZE;  // Flip Y coordinate since your grid starts from top
-    tile->SetPosition(worldX, worldY);
+    tile->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+ 
 
 
     // Add sprite component
@@ -120,7 +122,8 @@ void TileMap::CreateTile(int x, int y, TileType type)
     }
 
     // Add hitbox component
-    HitboxComponent* hitbox = new HitboxComponent(tile, Vec2(TILE_SIZE, TILE_SIZE), Vec2(0, 0));
+    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE, TILE_SIZE));
+    HitboxComponent* hitbox = new HitboxComponent(tile, myVec, Vec2(tile->GetPosition()));
     tile->AddComponent(hitbox);
 
     tiles.push_back(tile);

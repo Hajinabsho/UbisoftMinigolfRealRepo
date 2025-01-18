@@ -3,6 +3,7 @@
 #include "SpriteComponent.h"
 #include "HitboxComponent.h"
 #include "vector"
+#include "PhysicsUtility.h"
 
 // Define the tile types
 enum TileType {
@@ -87,7 +88,7 @@ public:
     void Update(const float deltaTime_) override;
     void Render()const override;
 
-
+    std::vector<Actor*> GetTiles() { return tiles; }
     void CreateTile(int x, int y, TileType type);
     TileType GetTileAt(int x, int y) const;
     void WorldToGrid(const Vec2& worldPos, int& gridX, int& gridY) const;

@@ -21,17 +21,21 @@ void HitboxComponent::OnDestroy()
 
 void HitboxComponent::Update(const float deltaTime_)
 {
+    //center.print();
+
 }
 
 void HitboxComponent::Render() const
 {
+
     if (!isActive) return;
 
     // Get the parent actor's position
     Vec2 pos(0, 0);
     if (Actor* actor = static_cast<Actor*>(parent)) {
-        pos = actor->GetPosition();
+        pos = PhysicsUtility::ToPixels(actor->GetPosition());
     }
+
     
     // Calculate corner positions
     float left = pos.x + center.x - dimensions.x / 2;
@@ -56,30 +60,30 @@ void HitboxComponent::Render() const
 
 bool HitboxComponent::CheckCollision(const HitboxComponent* other, const Vec2& myPos, const Vec2& otherPos) const
 {
-    //if isActive is false, or other is null or other isActive is false return false
-    if (!isActive || !other || !other->GetIsActive()) return false;
 
-    // Calculate actual positions including center offsets
-    float myLeft = myPos.x + center.x - dimensions.x / 2;
-    float myRight = myPos.x + center.x + dimensions.x / 2;
-    float myTop = myPos.y + center.y + dimensions.y / 2;
-    float myBottom = myPos.y + center.y - dimensions.y / 2;
+    if (!isActive || !other || !other->isActive)
+    {
+        return false;
+    }
 
-    float otherLeft = otherPos.x + other->center.x - other->dimensions.x / 2;
-    float otherRight = otherPos.x + other->center.x + other->dimensions.x / 2;
-    float otherTop = otherPos.y + other->center.y + other->dimensions.y / 2;
-    float otherBottom = otherPos.y + other->center.y - other->dimensions.y / 2;
+    // Calculate AABB min and max for this hitbox
+    Vec2 minA = myPos + center - dimensions * 0.5f;
+    Vec2 maxA = myPos + center + dimensions * 0.5f;
 
+    // Calculate AABB min and max for the other hitbox
+    Vec2 minB = otherPos + other->center - other->dimensions * 0.5f;
+    Vec2 maxB = otherPos + other->center + other->dimensions * 0.5f;
 
-	return !(myRight < otherLeft ||
-        myLeft > otherRight ||
-        myBottom > otherTop ||
-        myTop < otherBottom);
+    // AABB overlap check in 2D (no z-axis)
+    return (minA.x <= maxB.x && maxA.x >= minB.x) &&  // Overlap in x-axis
+        (minA.y <= maxB.y && maxA.y >= minB.y);    // Overlap in y-axis
 }
 
-void HitboxComponent::OnNotify(Actor& actor)
+void HitboxComponent::OnNotify(Actor& actor, Actor& otherActor)
 {
-    std::cout << "Colliding!!" << '\n';
+
+    actor.OnCollision(actor , otherActor);
+
 }
 
 

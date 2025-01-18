@@ -12,6 +12,7 @@
 #include "SpriteComponent.h"
 #include "Floor.h"
 #include "GolfBall.h"
+#include "HitboxSystem.h"
 enum
 {
 	ANIM_FORWARDS,
@@ -32,6 +33,7 @@ class Scene0 : public Scene
 	std::unique_ptr<Floor> floor;
 	std::unique_ptr<GolfBall> golfBall;
 
+	HitboxSystem hitboxSystem;
 public:
 	Scene0();
 	~Scene0();

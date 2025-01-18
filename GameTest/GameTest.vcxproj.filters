@@ -46,9 +46,6 @@
     <ClCompile Include="HitboxSystem.cpp">
       <Filter>MyGame\GamePattern</Filter>
     </ClCompile>
-    <ClCompile Include="MyVector.cpp">
-      <Filter>MyGame\Math</Filter>
-    </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>MyGame\Actors</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
       <Filter>MyGame\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorMath.cpp">
+      <Filter>MyGame\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsComponent.h">
       <Filter>MyGame\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorMath.h">
+      <Filter>MyGame\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

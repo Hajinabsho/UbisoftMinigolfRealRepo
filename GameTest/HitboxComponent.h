@@ -2,8 +2,9 @@
 #include "Component.h"
 #include "Observer.h"
 #include "app/app.h"
-#include "MyVector.h"
-
+#include "PhysicsUtility.h"
+#include "VectorMath.h"
+#include "PhysicsComponent.h"
 
 class HitboxComponent : public Component, public Observer
 {
@@ -34,7 +35,7 @@ public:
 	void SetCenter(const Vec2& pos) { center = pos; }
 
 	// Observer interface
-	virtual void OnNotify(Actor& actor) override;
+	virtual void OnNotify(Actor& actor, Actor& otherActor) override;
 
 
 };

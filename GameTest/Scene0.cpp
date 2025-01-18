@@ -21,6 +21,21 @@ void Scene0::Init()
 	floor = std::make_unique<Floor>(nullptr);
 	floor->OnCreate();
 
+	//hitbox registration
+	hitboxSystem.RegisterActor(golfBall.get());
+	for (auto tile : tileMap->GetTiles()) 
+	{
+		if (tile) 
+		{
+			hitboxSystem.RegisterActor(tile);
+		}
+	}
+
+	hitboxSystem.AddObserver(golfBall->GetComponent<HitboxComponent>());
+
+	//hitboxSystem.RegisterActor(tileMap->getTiles)
+
+
 	//------------------------------------------------------------------------
 // Example Sprite Code....
 	testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
@@ -60,6 +75,9 @@ void Scene0::Update(float deltaTime)
 	golfBall->Update(deltaTime);
 	//floor->Update(deltaTime);
 	tileMap->Update(deltaTime);
+
+	hitboxSystem.updateActor(*golfBall);
+
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
 	//testSprite->Update(deltaTime);

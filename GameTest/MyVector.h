@@ -41,12 +41,24 @@ struct Vec2
 	{
 		return Vec2(x + v.x, y + v.y);
 	}
+
+	inline Vec2 operator+(const Vec2& v) const
+	{
+		return Vec2(x + v.x, y + v.y);
+	}
 	inline Vec2 operator-(Vec2& v) const
 	{
 		return Vec2(x - v.x, y - v.y);
 	}
-
-
+	inline Vec2 operator-(const Vec2& v) const
+	{
+		return Vec2(x - v.x, y - v.y);
+	}
+	inline Vec2 operator/(float s) const 
+	{
+		return Vec2(x / s, y / s);
+	}
+	
 
 	inline void print() 
 	{

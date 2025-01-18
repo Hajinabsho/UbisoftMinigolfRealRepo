@@ -28,5 +28,14 @@ public:
     static Vec2 ToMeters(const Vec2& pixelsVec) {
         return Vec2(ToMeters(pixelsVec.x), ToMeters(pixelsVec.y));
     }
+
+    //Created this to avoid tight coupling between Physics and hitbox Component
+    struct CollisionInfo 
+    {
+        Vec2 collisionPoint;    
+        Vec2 normal;           
+        Vec2 myCenter;         
+        Vec2 otherCenter;      
+    };
 };
 

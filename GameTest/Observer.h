@@ -4,6 +4,6 @@ class Observer
 {
 public:
 	virtual ~Observer() {}
-	virtual void OnNotify(Actor& actor) = 0;
+	virtual void OnNotify(Actor& actor, Actor& otherActor) = 0;
 };
 

@@ -19,7 +19,7 @@ public:
 	}
 
 protected:
-	void Notify(Actor& actor)
+	void Notify(Actor& actor, Actor& otherActor)
 	{
 		//for (int i = 0; i < numObservers; i++)
 		//{
@@ -28,7 +28,7 @@ protected:
 
 		for (auto* observer : observers)
 		{
-			observer->OnNotify(actor);
+			observer->OnNotify(actor, otherActor);
 		}
 	}
 
