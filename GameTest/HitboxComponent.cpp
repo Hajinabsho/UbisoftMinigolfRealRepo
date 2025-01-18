@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "HitboxComponent.h"
 
+
 HitboxComponent::HitboxComponent(Component* parent_, const Vec2& dimensions_, const Vec2& center_) : Component(parent_)
 {
 	center = center_;

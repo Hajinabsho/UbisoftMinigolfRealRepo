@@ -195,6 +195,8 @@
     <ClInclude Include="miniaudio\miniaudio.h" />
     <ClInclude Include="MyVector.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="PhysicsComponent.h" />
+    <ClInclude Include="PhysicsUtility.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene0.h" />
@@ -220,6 +222,8 @@
     <ClCompile Include="HitboxSystem.cpp" />
     <ClCompile Include="miniaudio\miniaudio.cpp" />
     <ClCompile Include="MyVector.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
+    <ClCompile Include="PhysicsUtility.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Scene0.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />

@@ -58,6 +58,12 @@
     <ClCompile Include="GolfBall.cpp">
       <Filter>MyGame\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsUtility.cpp">
+      <Filter>MyGame\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>MyGame\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -127,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="GolfBall.h">
       <Filter>MyGame\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsUtility.h">
+      <Filter>MyGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>MyGame\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

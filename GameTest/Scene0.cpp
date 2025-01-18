@@ -62,7 +62,7 @@ void Scene0::Update(float deltaTime)
 	tileMap->Update(deltaTime);
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	testSprite->Update(deltaTime);
+	//testSprite->Update(deltaTime);
 	if (App::GetController().GetLeftThumbStickX() > 0.5f)
 	{
 		std::cout << "hello" << '\n';
@@ -136,12 +136,12 @@ void Scene0::Render()
 	//floor->Render();
 	
 
-	//background->Draw();
+	background->Draw();
 	golfBall->Render();
 	tileMap->Render();
 	//------------------------------------------------------------------------
 // Example Sprite Code....
-	testSprite->Draw();
+	//testSprite->Draw();
 	//------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------
@@ -152,22 +152,22 @@ void Scene0::Render()
 	//------------------------------------------------------------------------
 	// Example Line Drawing.
 	//------------------------------------------------------------------------
-	static float a = 0.0f;
-	const float r = 1.0f;
-	float g = 1.0f;
-	float b = 1.0f;
-	a += 0.1f;
-	for (int i = 0; i < 20; i++)
-	{
+	//static float a = 0.0f;
+	//const float r = 1.0f;
+	//float g = 1.0f;
+	//float b = 1.0f;
+	//a += 0.1f;
+	//for (int i = 0; i < 20; i++)
+	//{
 
-		const float sx = 200 + sinf(a + i * 0.1f) * 60.0f;
-		const float sy = 200 + cosf(a + i * 0.1f) * 60.0f;
-		const float ex = 700 - sinf(a + i * 0.1f) * 60.0f;
-		const float ey = 700 - cosf(a + i * 0.1f) * 60.0f;
-		g = (float)i / 20.0f;
-		b = (float)i / 20.0f;
-		App::DrawLine(sx, sy, ex, ey, r, g, b);
-	}
+	//	const float sx = 200 + sinf(a + i * 0.1f) * 60.0f;
+	//	const float sy = 200 + cosf(a + i * 0.1f) * 60.0f;
+	//	const float ex = 700 - sinf(a + i * 0.1f) * 60.0f;
+	//	const float ey = 700 - cosf(a + i * 0.1f) * 60.0f;
+	//	g = (float)i / 20.0f;
+	//	b = (float)i / 20.0f;
+	//	App::DrawLine(sx, sy, ex, ey, r, g, b);
+	//}
 }
 
 void Scene0::Shutdown()

@@ -32,10 +32,28 @@ struct Vec2
 		return *this;
 	}
 
+	inline Vec2 operator*(float s)const 
+	{
+		return Vec2(x * s, y * s);
+	}
+
+	inline Vec2 operator+(Vec2& v) const 
+	{
+		return Vec2(x + v.x, y + v.y);
+	}
+	inline Vec2 operator-(Vec2& v) const
+	{
+		return Vec2(x - v.x, y - v.y);
+	}
+
+
+
 	inline void print() 
 	{
 		std::cout << "X: " << x << "Y: " << y << '\n';
 	}
+
+
 
 };
 
