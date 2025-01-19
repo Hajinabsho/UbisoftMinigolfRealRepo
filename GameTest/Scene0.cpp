@@ -15,8 +15,6 @@ void Scene0::Init()
 	background = App::CreateSprite(".\\TestData\\Background.png", 1, 1);
 	background->SetPosition(512, 384.0f);
 
-
-
 	golfBall = std::make_unique<GolfBall>(nullptr);
 	golfBall->OnCreate();
 
@@ -54,21 +52,6 @@ void Scene0::Init()
 	//------------------------------------------------------------------------
 
 
-	//mySprite->LoadSprite(".\\TestData\\Basic_Top.png", 1, 1);
-
-
-
-	//for (int y = 0; y < tileMap->GetHeight(); y++) {
-	//	for (int x = 0; x < tileMap->GetWidth(); x++) {
-	//		TileType tile = tileMap->GetTileAt(x, y); // Get tile data
-	//		std::string tileTypeStr = (tile == TileType::Empty) ? "E" :
-	//			(tile == TileType::Ground) ? "G" : "W"; // Use shorter representations for clarity
-
-	//		// Output to console using std::cout, print in grid format
-	//		std::cout << tileTypeStr << " ";  // Add a space between tiles for readability
-	//	}
-	//	std::cout << std::endl;  // After each row, print a newline to start a new line
-	//}
 }
 
 void Scene0::Update(float deltaTime)
