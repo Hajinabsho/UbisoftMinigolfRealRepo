@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Scene0.h"
 
+
 Scene0::Scene0()
 {
 }
@@ -11,18 +12,20 @@ Scene0::~Scene0()
 
 void Scene0::Init()
 {
+	camera = std::make_unique<Camera>();
+
 
 	background = App::CreateSprite(".\\TestData\\Background.png", 1, 1);
 	background->SetPosition(512, 384.0f);
 
-	golfBall = std::make_unique<GolfBall>(nullptr);
+	golfBall = std::make_unique<GolfBall>(nullptr, camera.get());
 	golfBall->OnCreate();
 
-	tileMap = std::make_unique<TileMap>(nullptr);
+	tileMap = std::make_unique<TileMap>(nullptr, camera.get());
+	tileMap->SetMapData(MapConfigs::Level1());
+	//tileMap = std::make_unique<TileMap>(nullptr);
 	tileMap->OnCreate();
 
-	floor = std::make_unique<Floor>(nullptr);
-	floor->OnCreate();
 
 	//hitbox registration
 	hitboxSystem.RegisterActor(golfBall.get());
@@ -56,9 +59,8 @@ void Scene0::Init()
 
 void Scene0::Update(float deltaTime)
 {    
-	
+	camera->Update(deltaTime);
 	golfBall->Update(deltaTime);
-	//floor->Update(deltaTime);
 	tileMap->Update(deltaTime);
 
 	hitboxSystem.updateActor(*golfBall);
@@ -136,42 +138,15 @@ void Scene0::Update(float deltaTime)
 
 void Scene0::Render()
 {
-	//floor->Render();
 	
 
-	//background->Draw();
+	background->Draw();
 	
 	tileMap->Render();
 	golfBall->Render();
-	//------------------------------------------------------------------------
-// Example Sprite Code....
-	//testSprite->Draw();
-	//------------------------------------------------------------------------
 
-	//------------------------------------------------------------------------
-	// Example Text.
-	//------------------------------------------------------------------------
 	App::Print(100, 100, "Sample Text");
 
-	//------------------------------------------------------------------------
-	// Example Line Drawing.
-	//------------------------------------------------------------------------
-	//static float a = 0.0f;
-	//const float r = 1.0f;
-	//float g = 1.0f;
-	//float b = 1.0f;
-	//a += 0.1f;
-	//for (int i = 0; i < 20; i++)
-	//{
-
-	//	const float sx = 200 + sinf(a + i * 0.1f) * 60.0f;
-	//	const float sy = 200 + cosf(a + i * 0.1f) * 60.0f;
-	//	const float ex = 700 - sinf(a + i * 0.1f) * 60.0f;
-	//	const float ey = 700 - cosf(a + i * 0.1f) * 60.0f;
-	//	g = (float)i / 20.0f;
-	//	b = (float)i / 20.0f;
-	//	App::DrawLine(sx, sy, ex, ey, r, g, b);
-	//}
 }
 
 void Scene0::Shutdown()
@@ -180,5 +155,6 @@ void Scene0::Shutdown()
 // Example Sprite Code....
 	delete testSprite;
 	delete background;
+	//delete camera;
 	//------------------------------------------------------------------------
 }

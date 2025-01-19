@@ -44,33 +44,37 @@ void PhysicsComponent::Update(const float deltaTime_)
 
 	//Gonna try more Arcade approach 
 	// Only process physics if the ball is moving
-
+	
 	if (isGrounded) {
 
 		// If velocity is below minimum threshold, stop the ball
 		if (VectorMath::mag(Vec2(velocity)) < minimumVelocity && isGrounded)
 		{
 			velocity = Vec2(0.0f, 0.0f);
-
+			
 		}
 		useGravity = false;
-
+		
 	}
-	else if (VectorMath::mag(velocity) > minimumVelocity)
+	//if velocity is fast enough
+	else if (VectorMath::mag(velocity) > minimumVelocity || !isGrounded)
 	{
 		// Apply gravity if enabled (as a direct velocity change)
 		if (useGravity && !isGrounded)
 		{
 			velocity.y -= gravity * gravityScale * deltaTimeSeconds;
+			
 		}
+		//if(useGravity && VectorMath::mag(velocity) > minimumVelocity)
+		//{
+		//	useGravity = false;
 
+		//}
 		// Update position based on velocity
 		position = position + (velocity * deltaTimeSeconds);
 
 		// Apply linear damping (air resistance)
 		velocity = velocity * pow(linearDamping, deltaTimeSeconds);
-
-
 	}
 
 
@@ -98,7 +102,6 @@ void PhysicsComponent::ApplyAngularForce(float torque)
 void PhysicsComponent::HandleCollision(const Vec2& normal)
 {
 
-
 	// Calculate velocity along the normal using dot product
 	float velAlongNormal = VectorMath::dot(velocity, normal);
 
@@ -118,10 +121,16 @@ void PhysicsComponent::HandleCollision(const Vec2& normal)
 			velocity = VectorMath::normalize(velocity) * maxVel;
 		}
 		// If velocity is below minimum threshold, stop the ball
-		if (VectorMath::mag(Vec2(velocity)) < minimumVelocity && isGrounded)
+		if (VectorMath::mag(Vec2(velocity)) < minimumVelocity && !isGrounded)
 		{
 			isGrounded = true;
+			useGravity = false;
+			
 		}
+	}
+	else 
+	{
+
 	}
 }
 

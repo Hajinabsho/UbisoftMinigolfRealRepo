@@ -31,6 +31,7 @@ struct Vec2
 		set(v.x, v.y);
 		return *this;
 	}
+	
 
 	inline Vec2 operator*(float s)const 
 	{

@@ -58,10 +58,39 @@ void SpriteComponent::Update(const float deltaTime_) {
 
 }
 
-void SpriteComponent::Render() const {
-    if (sprite) {
+void SpriteComponent::Render() const 
+{
+    //now that I added Camera I need to offset the rendering pixle position of all object based on the camera
+    Vec2 renderPos;
+    if (Actor* actor = static_cast<Actor*>(parent)) 
+    {
+        //Physics position of the parent Actor
+        Vec2 worldPos = actor->GetPosition(); 
+        //if Camera exist, add the offset both are physics space
+        if (actor->GetCamera()) {
+            worldPos = worldPos + actor->GetCamera()->GetOffset();
+            renderPos = PhysicsUtility::ToPixels(worldPos);
+            sprite->SetPosition(renderPos.x, renderPos.y);
+        }
+
+        if (sprite)
+        {
+            sprite->Draw();
+        }
+        return;
+    }
+
+    if (sprite) 
+    {
         sprite->Draw();
     }
+    //sprite->Draw();
+ 
+    //Old Code without Camera
+    //if (sprite) {
+    //    sprite->Draw();
+    //}
+
 }
 
 void SpriteComponent::CreateAnimation(unsigned int id, float speed, const std::vector<int>& frames) {

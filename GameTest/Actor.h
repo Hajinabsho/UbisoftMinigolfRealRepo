@@ -3,6 +3,7 @@
 #include "vector"
 #include "iostream"
 #include "MyVector.h"
+#include "Camera.h"
 
 class Actor : public Component
 {
@@ -14,13 +15,15 @@ protected:
 	Vec2 position;
 	float rotation;    // in radians
 	float scale;
+	Camera* camera;
 
 public:
+	Camera* GetCamera() { return camera; };
+
 	//Must have Parent
 	Actor() = delete;
-	Actor(Component* parent_);
+	Actor(Component* parent_, Camera* camera_ = nullptr);
 	virtual ~Actor();
-
 
 
 	bool OnCreate() override;

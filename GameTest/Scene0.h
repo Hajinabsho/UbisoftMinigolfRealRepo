@@ -13,6 +13,8 @@
 #include "Floor.h"
 #include "GolfBall.h"
 #include "HitboxSystem.h"
+#include "Camera.h"
+#include "MapConfig.h"
 enum
 {
 	ANIM_FORWARDS,
@@ -30,8 +32,8 @@ class Scene0 : public Scene
 	//Floor* myGround;
 
 	std::unique_ptr<TileMap> tileMap;
-	std::unique_ptr<Floor> floor;
 	std::unique_ptr<GolfBall> golfBall;
+	std::unique_ptr<Camera> camera;
 
 	HitboxSystem hitboxSystem;
 public:

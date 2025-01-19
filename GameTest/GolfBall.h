@@ -32,6 +32,7 @@ private:
 
 public:
     GolfBall(Component* parent_);
+    GolfBall(Component* parent_, Camera* camera_);
     virtual ~GolfBall();
 
     bool OnCreate() override;

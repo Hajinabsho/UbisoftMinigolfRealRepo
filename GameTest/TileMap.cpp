@@ -6,6 +6,11 @@ TileMap::TileMap(Component* parent_) :Actor(parent_)
 
 }
 
+TileMap::TileMap(Component* parent_, Camera* camera_) :Actor(parent_, camera_)
+{
+    camera = camera_;
+}
+
 TileMap::~TileMap()
 {
     OnDestroy();
@@ -83,14 +88,15 @@ void TileMap::Render() const
 
 void TileMap::CreateTile(int x, int y, TileType type)
 {
-    Actor* tile = new Actor(this);
+     
+    Actor* tile = new Actor(this, camera);
     //tile->SetPosition(x * TILE_SIZE, y * TILE_SIZE);
 
     float worldX = x * TILE_SIZE;
     float worldY = (MAP_HEIGHT - y - 1) * TILE_SIZE;  // Flip Y coordinate since your grid starts from top
     tile->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
  
-
+    
 
     // Add sprite component
     SpriteComponent* sprite = new SpriteComponent(tile);
@@ -98,25 +104,39 @@ void TileMap::CreateTile(int x, int y, TileType type)
     tile->AddComponent(sprite);
 
     // Load different sprites based on tile type
+    //I would use flyweight pattern and reuse the texture info if I could alter the Sprite class 
     switch (type) {
     case TileType::Ground:
         sprite->LoadSprite(".\\TestData\\Basic_Top.png", 1, 1);
         sprite->SetPosition(worldX, worldY);  // Use calculated position
-        sprite->SetScale(0.1f);
+        sprite->SetScale(0.12f);
         //sprite->SetPosition(400, 600);
         break;
     case TileType::Wall:
         sprite->LoadSprite(".\\TestData\\Basic_Right.png", 1, 1);
         sprite->SetPosition(worldX, worldY);  // Use calculated position
-        sprite->SetScale(0.1f);
+        sprite->SetScale(0.12f);
         //sprite->SetPosition(600, 400);
         break;
+
+    case TileType::Hole:
+        sprite->LoadSprite(".\\TestData\\hole.png", 1, 1);
+        sprite->SetPosition(worldX, worldY);
+        sprite->SetScale(1.0f);
+        break;
+
+    case TileType::Flag:
+        sprite->LoadSprite(".\\TestData\\Flag.png", 1, 1);
+        sprite->SetPosition(worldX, worldY);
+        sprite->SetScale(1.0f);
+        break;
+
     default:
         break;
     }
 
     // Add hitbox component
-    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 10, TILE_SIZE + 10));
+    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 12, TILE_SIZE + 12));
     HitboxComponent* hitbox = new HitboxComponent(tile, myVec, Vec2(tile->GetPosition()));
     tile->AddComponent(hitbox);
 

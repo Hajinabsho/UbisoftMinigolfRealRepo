@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "App/SimpleSprite.h"
 #include "app\app.h"
+#include "PhysicsUtility.h"
 
 //Wrapper class of a Simple Sprite so its coherent as a Actor Component System.
 class SpriteComponent : public Component {

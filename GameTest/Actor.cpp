@@ -2,7 +2,7 @@
 #include "Actor.h"
 
 
-Actor::Actor(Component* parent_) :Component(parent_)
+Actor::Actor(Component* parent_, Camera* camera_) :Component(parent_), camera(camera_)
 {
 	position = Vec2(0.0f, 0.0f);
 	rotation = 0.0f;
@@ -13,7 +13,7 @@ Actor::~Actor() { OnDestroy(); }
 
 bool Actor::OnCreate() { return true; }
 
-void Actor::OnDestroy() { std::cout << "cleaning"; ClearComponents(); }
+void Actor::OnDestroy() { std::cout << "cleaning"; ClearComponents();}
 
 void Actor::Update(const float deltaTime_) {}
 
