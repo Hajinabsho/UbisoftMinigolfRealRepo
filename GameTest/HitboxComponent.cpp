@@ -35,13 +35,23 @@ void HitboxComponent::Render() const
     if (Actor* actor = static_cast<Actor*>(parent)) {
         pos = PhysicsUtility::ToPixels(actor->GetPosition());
     }
-
     
+    //pos.print();
+    Vec2 pixelDimensions(dimensions.x, dimensions.y);
+
+    pixelDimensions = PhysicsUtility::ToPixels(pixelDimensions);
+
+    //// Calculate corner positions
+    //float left = pos.x + center.x - dimensions.x / 2;
+    //float right = pos.x + center.x + dimensions.x / 2;
+    //float top = pos.y + center.y + dimensions.y / 2;
+    //float bottom = pos.y + center.y - dimensions.y / 2;
+
     // Calculate corner positions
-    float left = pos.x + center.x - dimensions.x / 2;
-    float right = pos.x + center.x + dimensions.x / 2;
-    float top = pos.y + center.y + dimensions.y / 2;
-    float bottom = pos.y + center.y - dimensions.y / 2;
+    float left = pos.x  - pixelDimensions.x / 2;
+    float right = pos.x  + pixelDimensions.x / 2;
+    float top = pos.y  + pixelDimensions.y / 2;
+    float bottom = pos.y  - pixelDimensions.y / 2;
 
     // Draw the hitbox as a rectangle using lines
     // Draw in red color for better visibility
@@ -50,12 +60,12 @@ void HitboxComponent::Render() const
     App::DrawLine(right, bottom, left, bottom, 1.0f, 0.0f, 0.0f); // Bottom line
     App::DrawLine(left, bottom, left, top, 1.0f, 0.0f, 0.0f);    // Left line
 
-    // Optionally, draw the center point
-    float centerSize = 2.0f;
-    float centerX = pos.x + center.x;
-    float centerY = pos.y + center.y;
-    App::DrawLine(centerX - centerSize, centerY, centerX + centerSize, centerY, 0.0f, 1.0f, 0.0f);  // Horizontal
-    App::DrawLine(centerX, centerY - centerSize, centerX, centerY + centerSize, 0.0f, 1.0f, 0.0f);  // Vertical
+    //// Optionally, draw the center point
+    //float centerSize = 2.0f;
+    //float centerX = pos.x + center.x;
+    //float centerY = pos.y + center.y;
+    //App::DrawLine(centerX - centerSize, centerY, centerX + centerSize, centerY, 0.0f, 1.0f, 0.0f);  // Horizontal
+    //App::DrawLine(centerX, centerY - centerSize, centerX, centerY + centerSize, 0.0f, 1.0f, 0.0f);  // Vertical
 }
 
 bool HitboxComponent::CheckCollision(const HitboxComponent* other, const Vec2& myPos, const Vec2& otherPos) const

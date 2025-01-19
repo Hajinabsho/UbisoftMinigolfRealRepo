@@ -15,6 +15,12 @@ PhysicsComponent::PhysicsComponent(Component* parent_) : Component(parent_)
 	maxVel = 5.0f;
 	useGravity = false;
 	gravity = 9.81f; //For Cartoon effect
+
+
+	linearDamping = 0.98f;    // Air resistance (0.98 = slight resistance, 0.8 = heavy resistance)
+	bounceFactor = 0.7f;        
+	gravityScale = 0.5f;      
+	minimumVelocity = 0.1f;
 }
 
 PhysicsComponent::~PhysicsComponent()
@@ -33,31 +39,42 @@ void PhysicsComponent::OnDestroy()
 void PhysicsComponent::Update(const float deltaTime_)
 {
 	// Convert milliseconds to seconds but actually made it 10th time more slower
-	float deltaTimeSeconds = deltaTime_ * 0.0001f;
+	float deltaTimeSeconds = deltaTime_ * 0.001f;
+	//velocity.print();
 
-	// Apply gravity if enabled
-	if (useGravity) {
-		Vec2 gravityForce(0.0f, -gravity * mass);  // Negative Y for downward force
-		ApplyForce(gravityForce);
+	//Gonna try more Arcade approach 
+	// Only process physics if the ball is moving
+
+	if (isGrounded) {
+
+		// If velocity is below minimum threshold, stop the ball
+		if (VectorMath::mag(Vec2(velocity)) < minimumVelocity && isGrounded)
+		{
+			velocity = Vec2(0.0f, 0.0f);
+
+		}
+		useGravity = false;
+
+	}
+	else if (VectorMath::mag(velocity) > minimumVelocity)
+	{
+		// Apply gravity if enabled (as a direct velocity change)
+		if (useGravity && !isGrounded)
+		{
+			velocity.y -= gravity * gravityScale * deltaTimeSeconds;
+		}
+
+		// Update position based on velocity
+		position = position + (velocity * deltaTimeSeconds);
+
+		// Apply linear damping (air resistance)
+		velocity = velocity * pow(linearDamping, deltaTimeSeconds);
+
+
 	}
 
-	position = position + velocity * deltaTimeSeconds + accel * (0.5f * deltaTimeSeconds * deltaTimeSeconds);
-	velocity = velocity + accel * deltaTimeSeconds;
 
 
-
-
-	
-
-	// Acceleration damping
-	//if (VectorMath::mag(accel) > 0.0f) {
-	//	float accelDampingFactor = 0.55f;
-	//	accel = accel * accelDampingFactor;
-
-	//	if (VectorMath::mag(accel) < 0.01f) {
-	//		accel = Vec2(0.0f, 0.0f);
-	//	}
-	//}
 }
 
 void PhysicsComponent::Render() const
@@ -80,23 +97,48 @@ void PhysicsComponent::ApplyAngularForce(float torque)
 
 void PhysicsComponent::HandleCollision(const Vec2& normal)
 {
+
+
 	// Calculate velocity along the normal using dot product
 	float velAlongNormal = VectorMath::dot(velocity, normal);
 
-	velocity = velAlongNormal * 
-	// Only reflect if we're moving into the surface
-	//if (velAlongNormal < 0) {
-	//	
-	//	Vec2 reflectedVel = velocity - (normal * (2.0f * velAlongNormal));
+	// Only bounce if we're moving into the surface
+	if (velAlongNormal < 0)
+	{
+		// Calculate reflection vector: v' = v - 2(v·n)n
+		Vec2 reflectedVel = velocity - (normal * (2.0f * velAlongNormal));
 
-	//	velocity = reflectedVel * bounceFactor;
+		// Apply bounciness and ensure we don't exceed max velocity
+		velocity = reflectedVel * bounceFactor;
 
-	//	// Reset acceleration on collision to prevent sticking
-	//	//accel = Vec2(0.0f, 0.0f);
-	//}
+		// Cap velocity if it exceeds maximum
+		float currentVel = VectorMath::mag(velocity);
+		if (currentVel > maxVel)
+		{
+			velocity = VectorMath::normalize(velocity) * maxVel;
+		}
+		// If velocity is below minimum threshold, stop the ball
+		if (VectorMath::mag(Vec2(velocity)) < minimumVelocity && isGrounded)
+		{
+			isGrounded = true;
+		}
+	}
 }
 
 Vec2 PhysicsComponent::CalculateCollisionNormal(const PhysicsUtility::CollisionInfo& info)
 {
 	return VectorMath::normalize(info.myCenter - info.otherCenter);
+}
+
+void PhysicsComponent::ClearGrounded()
+{
+	isGrounded = false;
+	groundNormal = Vec2(0, 1);
+}
+
+void PhysicsComponent::HitBall(const Vec2& hitForce)
+{
+	velocity = hitForce;
+	useGravity = true;
+	isGrounded = false;
 }

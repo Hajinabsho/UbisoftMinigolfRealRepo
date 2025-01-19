@@ -26,6 +26,15 @@ private:
 
     //Arcady
     float bounceFactor;
+    float linearDamping = 0.98f;    // Air resistance (0.98 = slight resistance, 0.8 = heavy resistance)
+    float gravityScale = 0.5f;
+    float minimumVelocity = 0.01f;
+
+    // Ground parameters
+    bool isGrounded = false;
+    float groundFriction = 0.95f;   
+    Vec2 groundNormal = Vec2(0, 1); 
+
 
 public:
     PhysicsComponent(Component* parent_);
@@ -45,8 +54,17 @@ public:
     void HandleCollision(const Vec2& normal);
     Vec2 CalculateCollisionNormal(const PhysicsUtility::CollisionInfo& info);
 
+    void ClearGrounded();
 
+    //I know I'm throw modulairty out of the window but I spent too much time. on physics and feeling of the game
+    //Todo: Make it modular
+    void HitBall(const Vec2& hitForce);
 
+    //Check if the ball is stopped
+    bool PhysicsComponent::IsStopped() const
+    {
+        return isGrounded && VectorMath::mag(velocity) <= minimumVelocity;
+    }
 
 
 
@@ -71,5 +89,7 @@ public:
     float GetOrientation() const { return orientation; }
     void SetOrientation(float angle) { orientation = angle; }
     float GetAngularVelocity() const { return rotation; }
+
+
 };
 

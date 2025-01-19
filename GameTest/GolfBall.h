@@ -4,6 +4,8 @@
 #include "PhysicsComponent.h"
 #include "PhysicsUtility.h"
 #include "HitboxComponent.h"
+#include "app\app.h"
+
 
 class GolfBall : public Actor
 {
@@ -13,7 +15,14 @@ private:
     HitboxComponent* hitbox;
 
     bool isMoving;
+    bool canHit;
+
+    //Striking ball Mechanic
+    float hitForce = 5.0f;
     float radius;
+    bool isDragging;
+    Vec2 dragStart;
+    float maxDragDistance = 100.0f;
 
 
 public:
@@ -25,7 +34,11 @@ public:
     void Update(const float deltaTime_) override;
     void Render() const override;
 
-
     virtual void OnCollision(Actor& actor, Actor& otherActor) override;
+
+
+    //GolfBall's class
+    Vec2 GetMousePhysicsPosition() const;
+
 };
 

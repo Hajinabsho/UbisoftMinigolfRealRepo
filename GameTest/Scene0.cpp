@@ -12,6 +12,11 @@ Scene0::~Scene0()
 void Scene0::Init()
 {
 
+	background = App::CreateSprite(".\\TestData\\Background.png", 1, 1);
+	background->SetPosition(512, 384.0f);
+
+
+
 	golfBall = std::make_unique<GolfBall>(nullptr);
 	golfBall->OnCreate();
 
@@ -48,9 +53,6 @@ void Scene0::Init()
 	testSprite->SetScale(1.0f);
 	//------------------------------------------------------------------------
 
-
-	background = App::CreateSprite(".\\TestData\\Background.png", 1, 1);
-	background->SetPosition(512, 384.0f);
 
 	//mySprite->LoadSprite(".\\TestData\\Basic_Top.png", 1, 1);
 

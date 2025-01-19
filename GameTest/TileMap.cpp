@@ -122,7 +122,7 @@ void TileMap::CreateTile(int x, int y, TileType type)
     }
 
     // Add hitbox component
-    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE, TILE_SIZE));
+    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 10, TILE_SIZE + 10));
     HitboxComponent* hitbox = new HitboxComponent(tile, myVec, Vec2(tile->GetPosition()));
     tile->AddComponent(hitbox);
 
