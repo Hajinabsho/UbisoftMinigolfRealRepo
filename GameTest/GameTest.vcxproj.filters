@@ -64,6 +64,20 @@
     <ClCompile Include="VectorMath.cpp">
       <Filter>MyGame\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="MapConfig.cpp" />
+    <ClCompile Include="Collectible.cpp">
+      <Filter>MyGame\Actors\Collectible</Filter>
+    </ClCompile>
+    <ClCompile Include="AirJumpPowerUp.cpp">
+      <Filter>MyGame\Actors\Collectible</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>MyGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityPowerUp.cpp">
+      <Filter>MyGame\Actors\Collectible</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -143,6 +157,20 @@
     <ClInclude Include="VectorMath.h">
       <Filter>MyGame\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="MapConfig.h" />
+    <ClInclude Include="Collectible.h">
+      <Filter>MyGame\Actors\Collectible</Filter>
+    </ClInclude>
+    <ClInclude Include="AirJumpPowerUp.h">
+      <Filter>MyGame\Actors\Collectible</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene1.h">
+      <Filter>MyGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityPowerUp.h">
+      <Filter>MyGame\Actors\Collectible</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -174,6 +202,9 @@
     </Filter>
     <Filter Include="MyGame\Math">
       <UniqueIdentifier>{a3059fbc-afd0-4dad-ba49-a997e015ca81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Actors\Collectible">
+      <UniqueIdentifier>{4e6d6ffa-c0d3-49f4-bcc0-8daf2bfc53f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

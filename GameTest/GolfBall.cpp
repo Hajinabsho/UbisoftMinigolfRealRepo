@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GolfBall.h"
+#include "Collectible.h"
 
 GolfBall::GolfBall(Component* parent_) : Actor(parent_)
 {
@@ -20,7 +21,7 @@ bool GolfBall::OnCreate()
 	spriteComponent = new SpriteComponent(this);
 	spriteComponent->LoadSprite(".\\TestData\\golfball.png", 1, 1);
 	spriteComponent->SetPosition(500, 500);
-	spriteComponent->SetScale(0.5f);  // Adjust scale as needed
+	spriteComponent->SetScale(0.5f);  
 
 	physics = new PhysicsComponent(nullptr);
 	physics->SetPosition(PhysicsUtility::ToMeters(Vec2(200, 450)));
@@ -54,7 +55,11 @@ void GolfBall::Update(const float deltaTime_)
 	
 
 	// Check for out of bounds
-	if (position.y < outOfBoundsY) {
+	if (position.y < -outOfBoundsY) {
+		Respawn();
+		return;
+	}
+	if (position.y > outOfBoundsY) {
 		Respawn();
 		return;
 	}
@@ -93,7 +98,7 @@ void GolfBall::Update(const float deltaTime_)
 				float dragDistance = VectorMath::mag(dragVector);
 
 				// Cap the distance to our maximum power
-				const float MAX_DRAG_DISTANCE = 2.0f; // Adjust this value to change maximum drag distance
+				const float MAX_DRAG_DISTANCE = 2.0f;
 				dragDistance = std::min(dragDistance, MAX_DRAG_DISTANCE);
 
 				// Calculate power (0 to 1)
@@ -121,7 +126,7 @@ void GolfBall::Update(const float deltaTime_)
 					// Only hit if we have some meaningful drag distance
 					if (dragDistance > 0.01f) {
 						Vec2 hitDirection = VectorMath::normalize(dragVector);
-						//HitForce = 10.0f; // Adjust this to change maximum hit force
+						
 						physics->HitBall(hitDirection * (power * hitForce));
 						totalHits++;
 						if (!physics->IsStopped()) {
@@ -163,11 +168,21 @@ void GolfBall::Render() const
 	std::string hitText = "Total Hits: " + std::to_string(totalHits);
 	App::Print(100, 100, hitText.c_str());
 
+	std::string maxAirHitText = "Max Air Hit: " + std::to_string(maxAirHits - 1);
+	App::Print(100, 150, maxAirHitText.c_str());
 }
 
 void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
 {
 	
+	if (Collectible* collectible = dynamic_cast<Collectible*>(&otherActor))
+	{
+		collectible->OnCollect(this);
+		
+		return;
+	}
+
+
 	//To find collision response first calculate the normal. 
 	// To do soGet Position of Two actor, and check if the collision is happening
 	//vertically or horizontally. Then pass that normal to handle collision. But
@@ -260,6 +275,7 @@ void GolfBall::Respawn()
 	SetPosition(spawnPoint);
 	physics->SetPosition(spawnPoint);
 	physics->SetVelocity(Vec2(0.0f, 0.0f));
+	physics->SetGravitySign(-1);
 	isDragging = false;
 	airHits = 0;
 }

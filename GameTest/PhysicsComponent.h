@@ -15,14 +15,18 @@ private:
     Vec2 accel;
     float mass;
     float radius;
-    float orientation;    // In radians
-    float rotation;      // Angular velocity in radians/second
-    float angular;       // Angular acceleration in radians/second^2
+    //Didnt really have tiem to use rotations for now
+    float orientation;    
+    float rotation;      
+    float angular;       
     float momentOfInertia;
     float maxAccel;
     float maxVel;
+
+    //Gravity
     bool useGravity;
     float gravity;
+    float gravitySign = -1.0f;
 
     //Arcady
     float bounceFactor;
@@ -76,6 +80,7 @@ public:
     Vec2 GetVelocity() const { return velocity; }
     void SetMass(float m) { mass = m; }
     float GetMass() const { return mass; }
+
     void SetRadius(float r) {
         radius = r;
         // For a disc, moment of inertia = (1/2) * mass * radius^2
@@ -86,6 +91,9 @@ public:
         useGravity = use;
         gravity = value;
     }
+    float GetGravitySign() { return gravitySign; }
+    void SetGravitySign(float sign) { gravitySign = sign; }
+
     float GetOrientation() const { return orientation; }
     void SetOrientation(float angle) { orientation = angle; }
     float GetAngularVelocity() const { return rotation; }

@@ -181,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="AirJumpPowerUp.h" />
     <ClInclude Include="App\app.h" />
     <ClInclude Include="App\AppSettings.h" />
     <ClInclude Include="App\main.h" />
@@ -188,9 +189,11 @@
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collectible.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GolfBall.h" />
+    <ClInclude Include="GravityPowerUp.h" />
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="HitboxSystem.h" />
     <ClInclude Include="MapConfig.h" />
@@ -213,16 +216,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="AirJumpPowerUp.cpp" />
     <ClCompile Include="App\app.cpp" />
     <ClCompile Include="App\main.cpp" />
     <ClCompile Include="App\SimpleController.cpp" />
     <ClCompile Include="App\SimpleSound.cpp" />
     <ClCompile Include="App\SimpleSprite.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collectible.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameTest.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GolfBall.cpp" />
+    <ClCompile Include="GravityPowerUp.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="HitboxSystem.cpp" />
     <ClCompile Include="MapConfig.cpp" />

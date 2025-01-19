@@ -32,11 +32,11 @@ private:
 
     //Implmenting double hit
     int airHits = 0;
-    int maxAirHits = 3;
+    int maxAirHits = 1;
 
     //For Respawn System
     Vec2 spawnPoint;
-    float outOfBoundsY = -5.0f;
+    float outOfBoundsY = 10.0f;
 
     //score
     int totalHits;
@@ -60,6 +60,9 @@ public:
     void SetSpawnPoint(const Vec2& point) { spawnPoint = point; }
     int GetTotalHits() const { return totalHits; }
     void Respawn();
+
+    int getMaxAirHit() { return maxAirHits; }
+    void setMaxAirHit(int airHit_) { maxAirHits = airHit_; }
 
 
 };

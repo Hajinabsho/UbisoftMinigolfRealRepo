@@ -16,6 +16,7 @@ protected:
 	float rotation;    // in radians
 	float scale;
 	Camera* camera;
+	bool isActive = true;
 
 public:
 	Camera* GetCamera() { return camera; };
@@ -49,6 +50,9 @@ public:
 	//I have a memory leak I need to fix
 	void ClearComponents();
 
+	//Added to disable certain objects but not delete it 
+	bool IsActive() const { return isActive; }
+	void SetActive(bool active) { isActive = active; }
 
 	//Need Template for a get component function
 	template <typename T>

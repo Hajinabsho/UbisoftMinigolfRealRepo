@@ -16,8 +16,8 @@ PhysicsComponent::PhysicsComponent(Component* parent_) : Component(parent_)
 	useGravity = false;
 	gravity = 9.81f; //For Cartoon effect
 
-
-	linearDamping = 0.98f;    // Air resistance (0.98 = slight resistance, 0.8 = heavy resistance)
+	// Air resistance (0.98 = slight resistance, 0.8 = heavy resistance)
+	linearDamping = 0.98f;    
 	bounceFactor = 0.7f;        
 	gravityScale = 0.5f;      
 	minimumVelocity = 0.1f;
@@ -62,7 +62,7 @@ void PhysicsComponent::Update(const float deltaTime_)
 		// Apply gravity if enabled (as a direct velocity change)
 		if (useGravity && !isGrounded)
 		{
-			velocity.y -= gravity * gravityScale * deltaTimeSeconds;
+			velocity.y += (gravity * gravitySign) * gravityScale * deltaTimeSeconds;
 			
 		}
 		//if(useGravity && VectorMath::mag(velocity) > minimumVelocity)

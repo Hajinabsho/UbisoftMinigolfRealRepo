@@ -61,7 +61,7 @@ void TileMap::Update(const float deltaTime_)
 {
     for (const auto& tile : tiles)
     {
-        if (tile) {
+        if (tile && tile->IsActive()) {
             tile->Update(deltaTime_);  // This will call render on all tile components including sprite
             tile->GetComponent<SpriteComponent>()->Update(deltaTime_);
             //tile->GetComponent<HitboxComponent>()->Update(deltaTime_);
@@ -75,7 +75,7 @@ void TileMap::Render() const
     // Render all tiles
     for (const auto& tile : tiles)
     {
-        if (tile) {
+        if (tile && tile->IsActive()) {
             tile->Render();  // This will call render on all tile components including sprite
             tile->GetComponent<SpriteComponent>()->Render();
 
@@ -141,12 +141,35 @@ void TileMap::CreateTile(int x, int y, TileType type)
         return;
         break;
 
+    case TileType::AirPowerUp: 
+    {
+        delete tile;
+        AirJumpPowerUp* airPowerUp = new AirJumpPowerUp(nullptr, camera);
+        airPowerUp->OnCreate();
+        airPowerUp->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        airPowerUp->GetComponent<HitboxComponent>()->SetCenter(airPowerUp->GetPosition());
+        tiles.push_back(airPowerUp);
+        return;
+    }
+    break;
+    case TileType::GravityBox:
+    {
+        delete tile;
+        GravityPowerUp* gravityPowerUp = new GravityPowerUp(nullptr, camera);
+        gravityPowerUp->OnCreate();
+        gravityPowerUp->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        gravityPowerUp->GetComponent<HitboxComponent>()->SetCenter(gravityPowerUp->GetPosition());
+        tiles.push_back(gravityPowerUp);
+        return;
+    }
+    break;
+
     default:
         break;
     }
 
     // Add hitbox component
-    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 11.5, TILE_SIZE + 11.5));
+    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 13, TILE_SIZE + 13));
     HitboxComponent* hitbox = new HitboxComponent(tile, myVec, Vec2(tile->GetPosition()));
     tile->AddComponent(hitbox);
 

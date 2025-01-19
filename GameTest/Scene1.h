@@ -15,6 +15,7 @@
 #include "HitboxSystem.h"
 #include "Camera.h"
 #include "MapConfig.h"
+#include "AirJumpPowerUp.h"
 
 class Scene1 : public Scene
 {
@@ -26,6 +27,9 @@ class Scene1 : public Scene
 	std::unique_ptr<TileMap> tileMap;
 	std::unique_ptr<GolfBall> golfBall;
 	std::unique_ptr<Camera> camera;
+	std::unique_ptr<AirJumpPowerUp> airJumpPowerUp;
+
+
 
 	HitboxSystem hitboxSystem;
 public:

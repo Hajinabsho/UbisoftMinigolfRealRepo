@@ -35,7 +35,7 @@ void LoadLevel(int level)
 	// Load  scene based on level
 	switch (level) {
 	case 1:
-		currentScene = new Scene0();
+		currentScene = new Scene1();
 		break;
 	case 2:
 		currentScene = new Scene1();

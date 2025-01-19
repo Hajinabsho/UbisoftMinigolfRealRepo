@@ -5,13 +5,19 @@
 #include "vector"
 #include "PhysicsUtility.h"
 
+//Specific Tiles to Spawn
+#include "AirJumpPowerUp.h"
+#include "GravityPowerUp.h"
+
 // Define the tile types
 enum TileType {
     Empty = 0,
     Ground = 1,
     Wall = 2,
     Hole = 3,
-    Flag = 4
+    Flag = 4,
+    AirPowerUp = 5,
+    GravityBox = 6
 };
 
 class TileMap : public Actor
