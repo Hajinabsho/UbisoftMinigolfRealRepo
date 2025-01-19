@@ -156,9 +156,10 @@ void Scene0::Render()
 	//floor->Render();
 	
 
-	background->Draw();
-	golfBall->Render();
+	//background->Draw();
+	
 	tileMap->Render();
+	golfBall->Render();
 	//------------------------------------------------------------------------
 // Example Sprite Code....
 	//testSprite->Draw();

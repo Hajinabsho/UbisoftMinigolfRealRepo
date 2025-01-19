@@ -20,10 +20,15 @@ private:
     //Striking ball Mechanic
     float hitForce = 5.0f;
     float radius;
+
     bool isDragging;
     Vec2 dragStart;
     float maxDragDistance = 100.0f;
-
+    
+    //For trajectory rendering
+    Vec2 lineStart;
+    Vec2 lineEnd;
+    float maxLineLength = 200.0f;
 
 public:
     GolfBall(Component* parent_);
@@ -39,6 +44,7 @@ public:
 
     //GolfBall's class
     Vec2 GetMousePhysicsPosition() const;
+    void RenderDragLine() const; 
 
 };
 

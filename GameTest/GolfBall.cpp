@@ -60,6 +60,7 @@ void GolfBall::Update(const float deltaTime_)
 		}
 
 	}
+	//Drag Release
 	if (isDragging) 
 	{
 		// Calculate drag vector and distance while dragging
@@ -76,7 +77,13 @@ void GolfBall::Update(const float deltaTime_)
 
 		std::cout << "Current Power: " << power << '\n';  // Debug output
 
-
+		// Calculate line positions for rendering
+		lineStart = PhysicsUtility::ToPixels(position);
+		Vec2 dragDir = VectorMath::normalize(dragVector);
+		float lineLength = power * maxLineLength;  
+		lineEnd = lineStart - (dragDir * lineLength);
+		//
+		
 		if (!App::IsKeyPressed(VK_LBUTTON))
 		{
 			// Only hit if we have some meaningful drag distance
@@ -88,6 +95,7 @@ void GolfBall::Update(const float deltaTime_)
 
 			std::cout << "relased" << '\n';
 			isDragging = false;
+			
 		}
 	}
 
@@ -135,34 +143,54 @@ void GolfBall::Render() const
 	spriteComponent->Render();
 	hitbox->Render();
 	
+	if (isDragging) {
+		
+		RenderDragLine();
+	}
+
 }
 
 void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
 {
 
-	//std::cout << "GolfBall collided with: " << typeid(otherActor).name() << std::endl;
-
-
-	//Vec2 normal = VectorMath::normalize(GetPosition() - otherActor.GetPosition());
-	//
-	//physics->HandleCollision(normal);
-
-
-	// Calculate collision point and proper normal based on collision geometry
-	Vec2 collisionPoint = position; // Or get from your collision system
+	//To find collision response first calculate the normal. 
+	// To do soGet Position of Two actor, and check if the collision is happening
+	//vertically or horizontally. Then pass that normal to handle collision. But
+	//the normal calculated here is not an accurate value but very rough version but will be enough
+	//For this game lol
+	Vec2 collisionPoint = position;
 	Vec2 otherPos = otherActor.GetPosition();
 
-	// For ground/ceiling
-	if (abs(collisionPoint.y - otherPos.y) > abs(collisionPoint.x - otherPos.x)) {
-		Vec2 normal(0, collisionPoint.y > otherPos.y ? 1.0f : -1.0f);
-		physics->HandleCollision(normal);
+	// Calculate the differences in x and y positions
+	float yDiff = abs(collisionPoint.y - otherPos.y);
+	float xDiff = abs(collisionPoint.x - otherPos.x);
+
+	Vec2 normal;
+
+	// Check if vertical collision (ground/ceiling)
+	if (yDiff > xDiff) {
+		
+		normal.x = 0;
+		if (collisionPoint.y > otherPos.y) {
+			normal.y = 1.0f;  
+		}
+		else {
+			normal.y = -1.0f; 
+		}
 	}
-	// For walls
+	// Horizontal collision (walls)
 	else {
-		Vec2 normal(collisionPoint.x > otherPos.x ? 1.0f : -1.0f, 0);
-		physics->HandleCollision(normal);
+		
+		normal.y = 0;
+		if (collisionPoint.x > otherPos.x) {
+			normal.x = 1.0f;  
+		}
+		else {
+			normal.x = -1.0f; 
+		}
 	}
 
+	physics->HandleCollision(normal);
 
 
 }
@@ -181,8 +209,14 @@ Vec2 GolfBall::GetMousePhysicsPosition() const
 		mouseY >= 0 && mouseY < height);
 
 
-
-
 	return PhysicsUtility::ToMeters(Vec2(mouseX, mouseY));
+}
+
+void GolfBall::RenderDragLine() const
+{
+
+	// Draw the line
+
+	App::DrawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
 }
 
