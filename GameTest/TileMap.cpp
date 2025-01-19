@@ -41,18 +41,12 @@ void TileMap::OnDestroy()
     delete groundSprite;
     delete wallSprite;
 
-    // Delete all tile actors and their components
     for (auto tile : tiles) {
-        // Delete the sprite component
-        auto spriteComponent = tile->GetComponent<SpriteComponent>();
-        if (spriteComponent) {
-            delete spriteComponent;
+        if (tile) {
+            delete tile;
         }
-
-
-        // Delete the tile actor itself
-        delete tile;
     }
+ 
 
     // Clear the vector that holds the tiles
     tiles.clear();

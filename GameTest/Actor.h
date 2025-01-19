@@ -43,7 +43,8 @@ public:
 	void SetScale(float scale_) { scale = scale_; }
 	float GetScale() const { return scale; }
 
-
+	//I have a memory leak I need to fix
+	void ClearComponents();
 
 
 	//Need Template for a get component function

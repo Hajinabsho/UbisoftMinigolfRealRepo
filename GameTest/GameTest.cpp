@@ -25,8 +25,7 @@ Scene* currentScene = nullptr;
 //------------------------------------------------------------------------
 void Init()
 {
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout);  // Redirect stdout to the console
+
 	// Initialize with Scene0
 	currentScene = new Scene0();
 	currentScene->Init();
