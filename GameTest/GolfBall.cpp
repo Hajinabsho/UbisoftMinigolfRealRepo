@@ -22,9 +22,9 @@ bool GolfBall::OnCreate()
 	physics->SetVelocity(Vec2(1.0f, 1.0f));
 	physics->SetGravity(true);
 
-	hitbox = new HitboxComponent(this, Vec2(1.0f, 1.0f));
+	hitbox = new HitboxComponent(this, 0.5f);
 	hitbox->SetActive(true);
-	hitbox->SetDimensions(Vec2(1.0f, 1.0f));
+	//hitbox->SetDimensions(Vec2(1.0f, 1.0f));
 
 	AddComponent(spriteComponent);
 	AddComponent(physics);
