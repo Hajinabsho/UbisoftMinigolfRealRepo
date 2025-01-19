@@ -44,5 +44,6 @@ public:
 	void Update(float deltaTime) override;
 	void Render() override;
 	void Shutdown() override;
+	bool IsVictoryConditionMet() override;
 };
 

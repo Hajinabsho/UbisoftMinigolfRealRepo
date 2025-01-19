@@ -216,6 +216,8 @@ private:
     SpriteComponent* groundSprite;
     SpriteComponent* wallSprite;
 
+    Vec2 holePos;
+
 public:
     TileMap(Component* parent_);
     TileMap(Component* parent_, Camera* camera_);
@@ -236,5 +238,7 @@ public:
     int GetTileSize() { return TILE_SIZE; }
 
     void SetMapData(const std::vector<std::vector<int>>& newMapData) { mapData = newMapData; }
+
+    Vec2 GetHolePos() { return holePos; }
 };
 

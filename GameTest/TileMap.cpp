@@ -78,7 +78,11 @@ void TileMap::Render() const
         if (tile) {
             tile->Render();  // This will call render on all tile components including sprite
             tile->GetComponent<SpriteComponent>()->Render();
-            tile->GetComponent<HitboxComponent>()->Render();
+
+            if (tile->GetComponent<HitboxComponent>()) {
+                tile->GetComponent<HitboxComponent>()->Render();
+            }
+            
         }
     }
 
@@ -123,12 +127,18 @@ void TileMap::CreateTile(int x, int y, TileType type)
         sprite->LoadSprite(".\\TestData\\hole.png", 1, 1);
         sprite->SetPosition(worldX, worldY);
         sprite->SetScale(1.0f);
+        tiles.push_back(tile);
+        holePos = PhysicsUtility::ToMeters(Vec2(worldX, worldY));
+
+        return;
         break;
 
     case TileType::Flag:
         sprite->LoadSprite(".\\TestData\\Flag.png", 1, 1);
         sprite->SetPosition(worldX, worldY);
         sprite->SetScale(1.0f);
+        tiles.push_back(tile);
+        return;
         break;
 
     default:
@@ -136,7 +146,7 @@ void TileMap::CreateTile(int x, int y, TileType type)
     }
 
     // Add hitbox component
-    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 12, TILE_SIZE + 12));
+    Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 11.5, TILE_SIZE + 11.5));
     HitboxComponent* hitbox = new HitboxComponent(tile, myVec, Vec2(tile->GetPosition()));
     tile->AddComponent(hitbox);
 
