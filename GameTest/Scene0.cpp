@@ -92,14 +92,14 @@ void Scene0::Update(float deltaTime)
 	//------------------------------------------------------------------------
 	// Sample Sound.
 	//------------------------------------------------------------------------
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
-	{
-		App::PlaySound(".\\TestData\\Test.wav", true);
-	}
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_X, true))
-	{
-		App::StopSound(".\\TestData\\Test.wav");
-	}
+	//if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
+	//{
+	//	App::PlaySound(".\\TestData\\Test.wav", true);
+	//}
+	//if (App::GetController().CheckButton(XINPUT_GAMEPAD_X, true))
+	//{
+	//	App::StopSound(".\\TestData\\Test.wav");
+	//}
 }
 
 void Scene0::Render()
@@ -111,7 +111,8 @@ void Scene0::Render()
 	tileMap->Render();
 	golfBall->Render();
 
-	App::Print(100, 100, "Sample Text");
+	
+	//App::Print(100, 100, "Sample Text");
 
 }
 
@@ -119,7 +120,7 @@ void Scene0::Shutdown()
 {
 	//------------------------------------------------------------------------
 // Example Sprite Code....
-	delete testSprite;
+	//delete testSprite;
 	delete background;
 	//delete camera;
 	//------------------------------------------------------------------------
@@ -127,7 +128,7 @@ void Scene0::Shutdown()
 
 bool Scene0::IsVictoryConditionMet()
 {
-	if (abs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos())) < 0.08f) {
+	if (fabs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos())) < 0.01f) {
 		//std::cout << "Ball in the Hole!";
 		return true;
 	}

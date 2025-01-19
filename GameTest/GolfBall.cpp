@@ -35,6 +35,8 @@ bool GolfBall::OnCreate()
 	AddComponent(physics);
 	AddComponent(hitbox);
 
+	spawnPoint = PhysicsUtility::ToMeters(Vec2(200, 450));
+
 	return true;
 }
 
@@ -49,92 +51,96 @@ void GolfBall::Update(const float deltaTime_)
 	hitbox->Update(deltaTime_);
 	physics->Update(deltaTime_);
 
+	
+
+	// Check for out of bounds
+	if (position.y < outOfBoundsY) {
+		Respawn();
+		return;
+	}
+
+
 	if (physics->IsStopped()) {
-		//Dragging Mechanism
-		if (abs(VectorMath::mag(position - GetMousePhysicsPosition())) < 0.2f) {
-			if (App::IsKeyPressed(VK_LBUTTON))
-			{
-				if (!isDragging)
-				{
-					isDragging = true;
-					dragStart = GetMousePhysicsPosition();
-					//std::cout << "Pressed W" << '\n';
-
-				}
-
-			}
-
-		}
-		//Drag Release
-		if (isDragging)
-		{
-			// Calculate drag vector and distance while dragging
-			Vec2 currentMousePos = GetMousePhysicsPosition();
-			Vec2 dragVector = dragStart - currentMousePos;
-			float dragDistance = VectorMath::mag(dragVector);
-
-			// Cap the distance to our maximum power
-			const float MAX_DRAG_DISTANCE = 2.0f; // Adjust this value to change maximum drag distance
-			dragDistance = std::min(dragDistance, MAX_DRAG_DISTANCE);
-
-			// Calculate power (0 to 1)
-			float power = dragDistance / MAX_DRAG_DISTANCE;
-
-			//std::cout << "Current Power: " << power << '\n';  // Debug output
-
-			// Calculate line positions for rendering
-			lineStart = PhysicsUtility::ToPixels(position);
-			Vec2 dragDir = VectorMath::normalize(dragVector);
-			float lineLength = power * maxLineLength;
-			lineEnd = lineStart - (dragDir * lineLength);
-			//
-
-			// Draw the line
-			if (camera) {
-				// Both line endpoints need to be offset by the same amount
-				Vec2 cameraOffset = PhysicsUtility::ToPixels(camera->GetOffset());
-				lineStart = lineStart + cameraOffset;
-				lineEnd = lineEnd + cameraOffset;
-			}
-
-			if (!App::IsKeyPressed(VK_LBUTTON))
-			{
-				// Only hit if we have some meaningful drag distance
-				if (dragDistance > 0.01f) {
-					Vec2 hitDirection = VectorMath::normalize(dragVector);
-					//HitForce = 10.0f; // Adjust this to change maximum hit force
-					physics->HitBall(hitDirection * (power * hitForce));
-				}
-
-				//std::cout << "relased" << '\n';
-				isDragging = false;
-
-			}
-		}
+		airHits = 0;
 	}
 	
 
-
-
-	if (physics->IsStopped()) 
+	if (physics->IsStopped() || airHits < maxAirHits)
 	{
-		if (App::IsKeyPressed('W')) {
-			
-			std::cout << "Pressed W" << '\n';
-		}
-		if (App::IsKeyPressed('S')) {
-			
-			std::cout << "Pressed S" << '\n';
-		}
-		if (App::IsKeyPressed('A')) {
-			
-			std::cout << "Pressed A" << '\n';
-		}
-		if (App::IsKeyPressed('D')) {
-		
-			std::cout << "Pressed D" << '\n';
-		}
+		//if (physics->IsStopped() || airHits < maxAirHits) {
+			//Dragging Mechanism
+			if (abs(VectorMath::mag(position - GetMousePhysicsPosition())) < 0.2f) {
+				if (App::IsKeyPressed(VK_LBUTTON))
+				{
+					if (!isDragging)
+					{
+						isDragging = true;
+						dragStart = GetMousePhysicsPosition();
+						//std::cout << "Pressed W" << '\n';
+						std::cout << "Mouse On";
+
+					}
+
+				}
+
+			}
+			//Drag Release
+			if (isDragging)
+			{
+				// Calculate drag vector and distance while dragging
+				Vec2 currentMousePos = GetMousePhysicsPosition();
+				Vec2 dragVector = dragStart - currentMousePos;
+				float dragDistance = VectorMath::mag(dragVector);
+
+				// Cap the distance to our maximum power
+				const float MAX_DRAG_DISTANCE = 2.0f; // Adjust this value to change maximum drag distance
+				dragDistance = std::min(dragDistance, MAX_DRAG_DISTANCE);
+
+				// Calculate power (0 to 1)
+				float power = dragDistance / MAX_DRAG_DISTANCE;
+
+				//std::cout << "Current Power: " << power << '\n';  // Debug output
+
+				// Calculate line positions for rendering
+				lineStart = PhysicsUtility::ToPixels(position);
+				Vec2 dragDir = VectorMath::normalize(dragVector);
+				float lineLength = power * maxLineLength;
+				lineEnd = lineStart - (dragDir * lineLength);
+				//
+
+				// Draw the line
+				if (camera) {
+					// Both line endpoints need to be offset by the same amount
+					Vec2 cameraOffset = PhysicsUtility::ToPixels(camera->GetOffset());
+					lineStart = lineStart + cameraOffset;
+					lineEnd = lineEnd + cameraOffset;
+				}
+
+				if (!App::IsKeyPressed(VK_LBUTTON))
+				{
+					// Only hit if we have some meaningful drag distance
+					if (dragDistance > 0.01f) {
+						Vec2 hitDirection = VectorMath::normalize(dragVector);
+						//HitForce = 10.0f; // Adjust this to change maximum hit force
+						physics->HitBall(hitDirection * (power * hitForce));
+						totalHits++;
+						if (!physics->IsStopped()) {
+							airHits++;
+						}
+					}
+
+					//std::cout << "relased" << '\n';
+					isDragging = false;
+
+				}
+			}
+		//}
 	}
+
+	
+	
+
+
 
 	
 }
@@ -154,6 +160,8 @@ void GolfBall::Render() const
 		
 		RenderDragLine();
 	}
+	std::string hitText = "Total Hits: " + std::to_string(totalHits);
+	App::Print(100, 100, hitText.c_str());
 
 }
 
@@ -244,5 +252,15 @@ Vec2 GolfBall::GetMousePhysicsPosition() const
 void GolfBall::RenderDragLine() const
 {
 	App::DrawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
+}
+
+void GolfBall::Respawn()
+{
+	// Reset position to spawn point
+	SetPosition(spawnPoint);
+	physics->SetPosition(spawnPoint);
+	physics->SetVelocity(Vec2(0.0f, 0.0f));
+	isDragging = false;
+	airHits = 0;
 }
 

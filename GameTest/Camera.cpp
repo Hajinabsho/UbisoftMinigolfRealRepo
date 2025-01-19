@@ -22,20 +22,20 @@ void Camera::Update(float deltaTime)
 {
     float deltaSec = deltaTime * 0.001;
     //// Handle WASD input for camera movement
-    if (App::IsKeyPressed('W')) 
+    if (App::IsKeyPressed('S')) 
     {
         offset.y += moveSpeed * deltaSec;
-        offset.print();
+        
     }
-    if (App::IsKeyPressed('S')) 
+    if (App::IsKeyPressed('W')) 
     {
         offset.y -= moveSpeed * deltaSec;
     }
-    if (App::IsKeyPressed('A'))
+    if (App::IsKeyPressed('D'))
     {
         offset.x -= moveSpeed * deltaSec;
     }
-    if (App::IsKeyPressed('D')) 
+    if (App::IsKeyPressed('A')) 
     {
         offset.x += moveSpeed * deltaSec;
     }

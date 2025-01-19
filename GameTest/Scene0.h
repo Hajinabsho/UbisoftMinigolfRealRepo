@@ -26,7 +26,7 @@ enum
 
 class Scene0 : public Scene
 {
-	CSimpleSprite* testSprite;
+	//CSimpleSprite* testSprite;
 	CSimpleSprite* background;
 	//SpriteComponent* mySprite;
 	//Floor* myGround;

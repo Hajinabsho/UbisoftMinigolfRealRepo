@@ -21,6 +21,7 @@
 Scene* currentScene = nullptr;
 int currentLevel = 1;
 bool isTransitioning;
+bool pendingTransition;
 
 void LoadLevel(int level)
 {
@@ -50,9 +51,12 @@ void LoadLevel(int level)
 
 void OnVictory()
 {
+	//pendingTransition = true;
+
 	currentLevel++;
 	isTransitioning = true;
 	LoadLevel(currentLevel);
+	currentScene->Init();
 	isTransitioning = false;
 
 	std::cout << "Next Level!: " << currentLevel << '\n';
@@ -66,7 +70,7 @@ void Init()
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);  // Redirect stdout to the console
 	// Initialize with Scene0
-	currentScene = new Scene0();
+	currentScene = new Scene1();
 	currentScene->Init();
 }
 
@@ -76,6 +80,36 @@ void Init()
 //------------------------------------------------------------------------
 void Update(const float deltaTime)
 {
+
+	//if (pendingTransition) {
+	//	currentLevel++;
+	//	isTransitioning = true;
+	//	LoadLevel(currentLevel);
+	//	isTransitioning = false;
+	//	pendingTransition = false;
+	//	if (currentScene) {
+	//		currentScene->Init(); 
+	//	}
+	//	return;  
+	//}
+
+	//if (!isTransitioning && currentScene) {
+	//	currentScene->Update(deltaTime);
+	//	if (currentScene->IsVictoryConditionMet())
+	//	{
+	//		// Just set the pending flag
+	//		OnVictory();  
+	//		return;  
+	//	}
+	//}
+
+
+
+
+
+
+
+
 
 	if (!isTransitioning) {
 		if (currentScene) {
@@ -88,6 +122,7 @@ void Update(const float deltaTime)
 			OnVictory();
 		}
 	}
+
 }
 
 //------------------------------------------------------------------------
@@ -95,7 +130,11 @@ void Update(const float deltaTime)
 // See App.h 
 //------------------------------------------------------------------------
 void Render()
-{	
+{
+	//if (!isTransitioning && !pendingTransition && currentScene) {
+	//	currentScene->Render();
+	//}
+
 	if (!isTransitioning) {
 		if (currentScene) {
 			currentScene->Render();
