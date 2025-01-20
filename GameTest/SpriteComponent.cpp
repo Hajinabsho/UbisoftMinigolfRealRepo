@@ -60,6 +60,7 @@ void SpriteComponent::Update(const float deltaTime_) {
 
 void SpriteComponent::Render() const 
 {
+
     //now that I added Camera I need to offset the rendering pixle position of all object based on the camera
     Vec2 renderPos;
     if (Actor* actor = static_cast<Actor*>(parent)) 
@@ -72,18 +73,22 @@ void SpriteComponent::Render() const
             renderPos = PhysicsUtility::ToPixels(worldPos);
             sprite->SetPosition(renderPos.x, renderPos.y);
         }
+        if (isVisible) {
+            if (sprite)
+            {
+                sprite->Draw();
+            }
+            return;
+        }
 
+    }
+    if (isVisible) {
         if (sprite)
         {
             sprite->Draw();
         }
-        return;
     }
 
-    if (sprite) 
-    {
-        sprite->Draw();
-    }
     //sprite->Draw();
  
     //Old Code without Camera

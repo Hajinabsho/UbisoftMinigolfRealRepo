@@ -10,7 +10,8 @@
 #include "GravityPowerUp.h"
 #include "RotatingObstacle.h"
 #include "MovingPlatform.h"
-
+#include "DisappearingPlatform.h"
+#include "BouncePad.h"
 
 // Define the tile types
 enum TileType {
@@ -22,7 +23,9 @@ enum TileType {
     AirPowerUp = 5,
     GravityBox = 6,
     RampTile = 7,
-    MovingPlatformTile = 8
+    MovingPlatformTile = 8,
+    IcePlatform = 9,
+    BounceTile = 10,
 };
 
 class TileMap : public Actor

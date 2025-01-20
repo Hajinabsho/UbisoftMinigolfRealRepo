@@ -182,17 +182,62 @@ void TileMap::CreateTile(int x, int y, TileType type)
     break;
     case TileType::MovingPlatformTile:
     {
+
+        Vec2 myVec = PhysicsUtility::ToMeters(Vec2(worldX, worldY));
+
         delete tile;
         MovingPlatform* movingPlatform = new MovingPlatform(nullptr, camera);
         movingPlatform->OnCreate();
-        movingPlatform->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        movingPlatform->SetPosition(myVec);
         movingPlatform->GetComponent<HitboxComponent>()->SetCenter(movingPlatform->GetPosition());
+        movingPlatform->SetEndPoints(myVec, Vec2(myVec.x + 3, myVec.y));
+
+        //AirJumpPowerUp* airPowerUp = new AirJumpPowerUp(nullptr, camera);
+        //airPowerUp->OnCreate();
+        //airPowerUp->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        //airPowerUp->GetComponent<HitboxComponent>()->SetCenter(airPowerUp->GetPosition());
+        //tiles.push_back(airPowerUp);
+
+
+        //MovingPlatform* movingPlatform = new MovingPlatform(nullptr, camera);
+        //movingPlatform->OnCreate();
+        //movingPlatform->GetComponent<SpriteComponent>()->SetPosition(worldX, worldY);
+        //movingPlatform->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        //movingPlatform->GetComponent<HitboxComponent>()->SetCenter(movingPlatform->GetPosition());
+        //Vec2 myVec = PhysicsUtility::ToMeters(Vec2(TILE_SIZE + 13, TILE_SIZE + 13));
+        //movingPlatform->GetComponent<HitboxComponent>()->SetDimensions(myVec);
+        //movingPlatform->SetEndPoints(myVec, Vec2(myVec.x + 5, myVec.y));
+
+
         tiles.push_back(movingPlatform);
+
 
         return;
     }
+    break;
+
+    case TileType::IcePlatform: 
+    {
+        DisappearingPlatform* icePlatform = new DisappearingPlatform(nullptr, camera);
+        icePlatform->OnCreate();
+        icePlatform->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        icePlatform->GetComponent<HitboxComponent>()->SetCenter(icePlatform->GetPosition());
+        tiles.push_back(icePlatform);
 
 
+        return;
+    }
+    break;
+    case TileType::BounceTile: 
+    {
+        BouncePad* bounceTile = new BouncePad(nullptr, camera);
+        bounceTile->OnCreate();
+        bounceTile->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        bounceTile->GetComponent<HitboxComponent>()->SetCenter(bounceTile->GetPosition());
+        tiles.push_back(bounceTile);
+        
+        return;
+    }
     break;
 
     default:

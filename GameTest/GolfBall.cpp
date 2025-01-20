@@ -1,7 +1,11 @@
 #include "stdafx.h"
 #include "GolfBall.h"
 #include "Collectible.h"
+#include "MovingPlatform.h"
+#include "DisappearingPlatform.h"
+#include "BouncePad.h"
 #include "App/SimpleSound.h"
+
 
 
 GolfBall::GolfBall(Component* parent_) : Actor(parent_)
@@ -30,7 +34,7 @@ bool GolfBall::OnCreate()
 	physics->SetVelocity(Vec2(0.0f, 1.0f));
 	physics->SetGravity(true);
 
-	hitbox = new HitboxComponent(this, 0.5f);
+	hitbox = new HitboxComponent(this, 1.0f);
 	hitbox->SetActive(true);
 	//hitbox->SetDimensions(Vec2(1.0f, 1.0f));
 
@@ -201,6 +205,18 @@ void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
 
 		return;
 	}
+	if (DisappearingPlatform* platform = dynamic_cast<DisappearingPlatform*>(&otherActor))
+	{
+		if (position.y > platform->GetPosition().y) {  
+			platform->StartDisappearing();
+		}
+		
+	}
+	if (BouncePad* bouncePad = dynamic_cast<BouncePad*>(&otherActor))
+	{
+		physics->SetVelocity(Vec2(physics->GetVelocity().x, physics->GetVelocity().y + bouncePad->GetBounceForce()));
+	}
+
 
 
 	//To find collision response first calculate the normal. 

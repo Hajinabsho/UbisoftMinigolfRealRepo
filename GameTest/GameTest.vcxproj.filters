@@ -91,6 +91,12 @@
     <ClCompile Include="Scene2.cpp">
       <Filter>MyGame\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="DisappearingPlatform.cpp">
+      <Filter>MyGame\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="BouncePad.cpp">
+      <Filter>MyGame\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -196,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="Scene2.h">
       <Filter>MyGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="DisappearingPlatform.h">
+      <Filter>MyGame\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="BouncePad.h">
+      <Filter>MyGame\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

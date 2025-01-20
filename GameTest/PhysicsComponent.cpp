@@ -101,14 +101,17 @@ void PhysicsComponent::ApplyAngularForce(float torque)
 
 void PhysicsComponent::HandleCollision(const Vec2& normal)
 {
-
+	
 	// Calculate velocity along the normal using dot product
 	float velAlongNormal = VectorMath::dot(velocity, normal);
+	
+
 
 	// Only bounce if we're moving into the surface
-	if (velAlongNormal < 0)
+	if (velAlongNormal < 0 )
 	{
-		// Calculate reflection vector: v' = v - 2(v·n)n
+		
+
 		Vec2 reflectedVel = velocity - (normal * (2.0f * velAlongNormal));
 
 		// Apply bounciness and ensure we don't exceed max velocity
@@ -127,10 +130,6 @@ void PhysicsComponent::HandleCollision(const Vec2& normal)
 			useGravity = false;
 			
 		}
-	}
-	else 
-	{
-
 	}
 }
 

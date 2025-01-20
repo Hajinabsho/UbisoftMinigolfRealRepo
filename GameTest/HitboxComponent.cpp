@@ -97,8 +97,10 @@ void HitboxComponent::OnDestroy()
 
 void HitboxComponent::Update(const float deltaTime_)
 {
-    //center.print();
-
+    ////center.print();
+    //if (Actor* actor = static_cast<Actor*>(parent)) {
+    //    center = actor->GetPosition();
+    //}
 
 }
 

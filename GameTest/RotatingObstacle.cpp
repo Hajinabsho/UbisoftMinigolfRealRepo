@@ -25,7 +25,7 @@ bool RotatingObstacle::OnCreate()
     spriteComponent->SetRotation(defaultAngle);
 
     // Create a rectangular hitbox
-    hitbox = new HitboxComponent(this, Vec2(3.5f, 0.3f), position);  // Long and thin
+    hitbox = new HitboxComponent(this, Vec2(3.5f, 1.0f), position);  // Long and thin
     hitbox->SetActive(true);
     hitbox->SetAngle(defaultAngle);
     

@@ -26,13 +26,13 @@ void Scene2::Init()
 
 
 
-	rotatingObstacle = std::make_unique<RotatingObstacle>(nullptr, camera.get());
-	rotatingObstacle->OnCreate();
+	//rotatingObstacle = std::make_unique<RotatingObstacle>(nullptr, camera.get());
+	//rotatingObstacle->OnCreate();
 
 
 	//hitbox registration
 	hitboxSystem.RegisterActor(golfBall.get());
-	hitboxSystem.RegisterActor(rotatingObstacle.get());
+	//hitboxSystem.RegisterActor(rotatingObstacle.get());
 
 	for (auto tile : tileMap->GetTiles())
 	{
@@ -55,7 +55,7 @@ void Scene2::Update(float deltaTime)
 	golfBall->Update(deltaTime);
 	tileMap->Update(deltaTime);
 
-	rotatingObstacle->Update(deltaTime);
+	//rotatingObstacle->Update(deltaTime);
 
 	hitboxSystem.updateActor(*golfBall);
 }
@@ -67,7 +67,7 @@ void Scene2::Render()
 
 	tileMap->Render();
 	golfBall->Render();
-	rotatingObstacle->Render();
+	//rotatingObstacle->Render();
 
 }
 

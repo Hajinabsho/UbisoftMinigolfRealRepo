@@ -7,6 +7,7 @@
 
 
 
+
 class GolfBall : public Actor
 {
 private:
@@ -32,7 +33,7 @@ private:
 
     //Implmenting double hit
     int airHits = 0;
-    int maxAirHits = 1;
+    int maxAirHits = 5;
 
     //For Respawn System
     Vec2 spawnPoint;

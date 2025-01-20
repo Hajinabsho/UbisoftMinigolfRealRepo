@@ -9,6 +9,7 @@ class SpriteComponent : public Component {
 private:
     CSimpleSprite* sprite;
     float x, y;
+    bool isVisible = true;
 public:
     SpriteComponent(Component* parent_);
     virtual ~SpriteComponent();
@@ -49,6 +50,8 @@ public:
 
    // float GetPosition(float& x, float& y) const;
 
+    bool GetVisible() { return isVisible; }
+    void SetVisible(bool visible_) { isVisible = visible_; }
 
 
     CSimpleSprite* GetSprite() const;

@@ -16,6 +16,10 @@ class MovingPlatform : public Actor
     float progress; 
     bool movingToEnd;  
 
+    ////To apply velocity to the golf ball Cancled this idea. platform will allow player to reset jumps
+    //Vec2 currentFrameDeltaPos;
+    //Vec2 previousPos;
+
 public:
     MovingPlatform(Component* parent_, Camera* camera_);
     virtual ~MovingPlatform();
@@ -25,8 +29,10 @@ public:
     void Update(const float deltaTime_) override;
     void Render() const override;
 
-
-
+    
+    //Vec2 GetMovementDelta() const {
+    //    return currentFrameDeltaPos;  // Store how much the platform moved this frame
+    //}
     void SetEndPoints(const Vec2& start, const Vec2& end) {
         startPos = start;
         endPos = end;
