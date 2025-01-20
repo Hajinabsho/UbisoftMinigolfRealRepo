@@ -36,6 +36,7 @@ private:
     static const int MAP_WIDTH = 96;  // Screen width in tiles
     static const int MAP_HEIGHT = 48; // Screen height in tiles
     static const int TILE_SIZE = 32;  // Size of each tile in pixels
+    bool DebugMode = false;
 
     //Trying to use array to parse creation of map somehow. I realize it would be so expensive and laborous to create platform objectives in the map one by one. Instead I'll try to parse it here with number
     //and spawn the static objects such as grounds and wall

@@ -84,6 +84,6 @@ void MovingPlatform::Update(const float deltaTime_)
 void MovingPlatform::Render() const
 {
 	sprite->Render();
-	hitbox->Render();
+	//hitbox->Render();
 
 }

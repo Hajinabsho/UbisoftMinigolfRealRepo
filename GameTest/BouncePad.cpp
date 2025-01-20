@@ -40,5 +40,5 @@ void BouncePad::Update(const float deltaTime_)
 void BouncePad::Render() const
 {
 	sprite->Render();
-	hitbox->Render();
+	//hitbox->Render();
 }

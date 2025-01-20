@@ -349,6 +349,8 @@ void GolfBall::Respawn()
 {
 	// Reset position to spawn point
 	SetPosition(spawnPoint);
+	//Reset caemra position to player
+	camera->SetOffset(Vec2(spawnPoint.x, spawnPoint.y - 4.0f));
 	physics->SetPosition(spawnPoint);
 	physics->SetVelocity(Vec2(0.0f, 0.0f));
 	physics->SetGravitySign(-1);

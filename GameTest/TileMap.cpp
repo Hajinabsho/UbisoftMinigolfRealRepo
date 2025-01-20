@@ -68,6 +68,12 @@ void TileMap::Update(const float deltaTime_)
         }
     }
 
+    if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
+    {
+        DebugMode = !DebugMode;
+        std::cout << "sad";
+    }
+
 }
 
 void TileMap::Render() const
@@ -80,8 +86,9 @@ void TileMap::Render() const
             tile->GetComponent<SpriteComponent>()->Render();
 
             if (tile->GetComponent<HitboxComponent>()) {
-                
-                //tile->GetComponent<HitboxComponent>()->Render();
+                if (DebugMode) {
+                    tile->GetComponent<HitboxComponent>()->Render();
+                }
             }
             
         }

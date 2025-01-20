@@ -61,7 +61,7 @@ void DisappearingPlatform::Render() const
 {
     
         sprite->Render();
-        hitbox->Render();
+        //hitbox->Render();
     
 
 }
