@@ -26,6 +26,6 @@ public:
     
     void ReLoadSprite();
     
-
+    void PlayGravitySound(float sign_);
 };
 

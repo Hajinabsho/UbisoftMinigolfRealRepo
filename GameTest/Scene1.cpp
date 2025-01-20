@@ -24,8 +24,7 @@ void Scene1::Init()
 	tileMap->SetMapData(MapConfigs::Level2());
 	tileMap->OnCreate();
 
-	airJumpPowerUp = std::make_unique<AirJumpPowerUp>(nullptr, camera.get());
-	airJumpPowerUp->OnCreate();
+
 
 	rotatingObstacle = std::make_unique<RotatingObstacle>(nullptr, camera.get());
 	rotatingObstacle->OnCreate();
@@ -56,7 +55,6 @@ void Scene1::Update(float deltaTime)
 	golfBall->Update(deltaTime);
 	tileMap->Update(deltaTime);
 	
-	airJumpPowerUp->Update(deltaTime);
 	rotatingObstacle->Update(deltaTime);
 
 	hitboxSystem.updateActor(*golfBall);
@@ -67,7 +65,6 @@ void Scene1::Render()
 
 	background->Draw();
 
-	airJumpPowerUp->Render();
 	tileMap->Render();
 	golfBall->Render();
 	rotatingObstacle->Render();

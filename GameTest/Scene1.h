@@ -20,7 +20,6 @@
 
 class Scene1 : public Scene
 {
-	CSimpleSprite* testSprite;
 	CSimpleSprite* background;
 	//SpriteComponent* mySprite;
 	//Floor* myGround;
@@ -28,7 +27,6 @@ class Scene1 : public Scene
 	std::unique_ptr<TileMap> tileMap;
 	std::unique_ptr<GolfBall> golfBall;
 	std::unique_ptr<Camera> camera;
-	std::unique_ptr<AirJumpPowerUp> airJumpPowerUp;
 	std::unique_ptr<RotatingObstacle> rotatingObstacle;
 
 

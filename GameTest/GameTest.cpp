@@ -72,6 +72,9 @@ void Init()
 	// Initialize with Scene0
 	currentScene = new Scene1();
 	currentScene->Init();
+
+	App::PlaySound(".\\TestData\\BackGroundMusic.mp3", true);
+	
 }
 
 //------------------------------------------------------------------------

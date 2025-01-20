@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GravityPowerUp.h"
+#include "App/SimpleSound.h"
 
 GravityPowerUp::GravityPowerUp(Component* parent_, Camera* camera_) : Collectible(parent_, camera_)
 {
@@ -65,11 +66,11 @@ void GravityPowerUp::Render() const
 void GravityPowerUp::OnCollect(GolfBall* ball)
 {
     if (!isOnCoolDown) {
-        std::cout << "OnCollectPowerup Called!";
         ball->GetComponent<PhysicsComponent>()->SetGravitySign(ball->GetComponent<PhysicsComponent>()->GetGravitySign() * -1);
         isOnCoolDown = true;
         cooldownTimer = 0.0f;
         spriteComponent->LoadSprite(".\\TestData\\GravityPowerUpCD.png", 1, 1);
+        PlayGravitySound(ball->GetComponent<PhysicsComponent>()->GetGravitySign());
 
     }
 
@@ -79,5 +80,19 @@ void GravityPowerUp::OnCollect(GolfBall* ball)
 void GravityPowerUp::ReLoadSprite()
 {
     spriteComponent->LoadSprite(".\\TestData\\GravityPowerUp.png", 1, 1);
+}
+
+void GravityPowerUp::PlayGravitySound(float sign_)
+{
+    //Normal gravity
+    if (sign_ < 0) {
+        CSimpleSound::GetInstance().StartSound(".\\TestData\\GravityOff.wav");
+
+    }
+    //reverse gravity
+    else {
+        CSimpleSound::GetInstance().StartSound(".\\TestData\\GravityOn.wav");
+
+    }
 }
 

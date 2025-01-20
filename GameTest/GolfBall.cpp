@@ -51,10 +51,21 @@ void GolfBall::Update(const float deltaTime_)
 {
 	SetPosition(physics->GetPosition());
 	hitbox->SetCenter(position);
+
+	if (!isGameStarted && App::IsKeyPressed(VK_LBUTTON))
+	{
+		isGameStarted = true;
+	}
+
+
+	if (!isGameStarted) return;
+
+
 	hitbox->Update(deltaTime_);
 	physics->Update(deltaTime_);
 
 	
+
 
 	// Check for out of bounds
 	if (position.y < -outOfBoundsY) {
@@ -133,6 +144,7 @@ void GolfBall::Update(const float deltaTime_)
 						totalHits++;
 						if (!physics->IsStopped()) {
 							airHits++;
+							
 						}
 					}
 
@@ -145,8 +157,14 @@ void GolfBall::Update(const float deltaTime_)
 	}
 
 	
-	
-
+	//For Bouncing the ball as the collision occur multiple time
+	if (!canPlayBounceSound) {
+		bounceSoundTimer += deltaTime_ * 0.001f;  // Convert to seconds
+		if (bounceSoundTimer >= bounceSoundCoolDown) {
+			canPlayBounceSound = true;
+			bounceSoundTimer = 0.0f;
+		}
+	}
 
 
 	
@@ -180,7 +198,6 @@ void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
 	if (Collectible* collectible = dynamic_cast<Collectible*>(&otherActor))
 	{
 		collectible->OnCollect(this);
-		
 
 		return;
 	}
@@ -224,6 +241,12 @@ void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
 	}
 
 	physics->HandleCollision(normal);
+
+	if (canPlayBounceSound && !physics->IsStopped()) {
+		CSimpleSound::GetInstance().StartSound(".\\TestData\\Bounce.wav");
+		canPlayBounceSound = false;
+		bounceSoundTimer = 0.0f;
+	}
 
 
 }
@@ -287,7 +310,13 @@ void GolfBall::BallStrike(const Vec2& hitforce_)
 {
 	physics->HitBall(hitforce_);
 
+	if (airHits == 0) {
+		CSimpleSound::GetInstance().StartSound(".\\TestData\\GolfHitting.wav");
 
-	CSimpleSound::GetInstance().StartSound(".\\TestData\\GolfHitting.wav");
+	}
+	else {
+		CSimpleSound::GetInstance().StartSound(".\\TestData\\GolfAirHit.mp3");
+
+	}
 }
 

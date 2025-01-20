@@ -53,9 +53,13 @@ void AirJumpPowerUp::Render() const
 void AirJumpPowerUp::OnCollect(GolfBall* ball)
 {
     if (!isCollected) {
+        CSimpleSound::GetInstance().StartSound(".\\TestData\\PowerUp.wav");
+
         ball->setMaxAirHit(ball->getMaxAirHit() + 1);
         isCollected = true;
         SetActive(false);
     }
     
 }
+
+

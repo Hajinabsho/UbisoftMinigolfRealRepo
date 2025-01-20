@@ -36,10 +36,19 @@ private:
 
     //For Respawn System
     Vec2 spawnPoint;
-    float outOfBoundsY = 10.0f;
+    float outOfBoundsY = 15.0f;
 
     //score
     int totalHits;
+
+    //Bounce Sound Timer
+    float bounceSoundTimer = 0.0f;
+    float bounceSoundCoolDown = 0.1f;
+    bool canPlayBounceSound = true;
+
+    
+    bool isGameStarted = false;
+
 
 public:
     GolfBall(Component* parent_);
@@ -65,6 +74,9 @@ public:
     void setMaxAirHit(int airHit_) { maxAirHits = airHit_; }
 
     void BallStrike(const Vec2& hitforce_);
+
+    void StartGame() { isGameStarted = true; }
+
 
 };
 

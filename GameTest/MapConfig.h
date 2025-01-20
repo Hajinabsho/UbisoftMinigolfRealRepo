@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
 
+/// <summary>
+/// This class is where I will store the array info of each map and I can'Parse' with TileMap class
+/// Pretty brute force :o
+/// </summary>
 class MapConfigs
 {
 public:
@@ -15,3 +19,14 @@ public:
 
 };
 
+//This is Defined in the TileMap.h
+//// Define the tile types
+//enum TileType {
+//    Empty = 0,
+//    Ground = 1,
+//    Wall = 2,
+//    Hole = 3,
+//    Flag = 4,
+//    AirPowerUp = 5,
+//    GravityBox = 6
+//};
