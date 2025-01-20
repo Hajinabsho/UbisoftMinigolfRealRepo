@@ -134,7 +134,7 @@ bool Scene0::IsVictoryConditionMet()
 	float ballSpeed = VectorMath::mag(golfBall->GetComponent<PhysicsComponent>()->GetVelocity());
 
 
-	if (distanceToHole < 1.0f && ballSpeed < 1.0f) {
+	if (distanceToHole < 0.5f && ballSpeed < 1.0f) {
 		golfBall->StartVictoryAnimation(tileMap->GetHolePos());
 		return true;
 	}

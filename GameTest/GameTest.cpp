@@ -190,7 +190,7 @@ void Render()
 		if (currentScene) {
 			currentScene->Render();
 
-			if (victoryTriggered) {
+			if (victoryTriggered && currentLevel > 0) {
 				App::Print(400, 300, "Level Complete!");
 			}
 		}
