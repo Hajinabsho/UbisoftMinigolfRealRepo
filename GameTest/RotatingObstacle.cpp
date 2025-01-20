@@ -22,11 +22,14 @@ bool RotatingObstacle::OnCreate()
     spriteComponent->LoadSprite(".\\TestData\\ThinRotatingBlock.png", 1, 1);
     spriteComponent->SetPosition(500, 500);
     spriteComponent->SetScale(0.3f);  // Adjust based on your sprite size
+    spriteComponent->SetRotation(defaultAngle);
 
     // Create a rectangular hitbox
     hitbox = new HitboxComponent(this, Vec2(3.5f, 0.3f), position);  // Long and thin
     hitbox->SetActive(true);
+    hitbox->SetAngle(defaultAngle);
     
+
 
     AddComponent(spriteComponent);
     AddComponent(hitbox);
@@ -41,18 +44,19 @@ void RotatingObstacle::OnDestroy()
 
 void RotatingObstacle::Update(const float deltaTime_)
 {
-    float deltaSec = deltaTime_ * 0.001f;
-    currentAngle += rotationSpeed * deltaSec;
-    hitbox->SetAngle(currentAngle);
+    if (isSpinning) {
+        float deltaSec = deltaTime_ * 0.001f;
+        currentAngle += rotationSpeed * deltaSec;
+        hitbox->SetAngle(currentAngle);
 
-    if (currentAngle >= 360.0f) {
-        currentAngle -= 360.0f;
+        if (currentAngle >= 360.0f) {
+            currentAngle -= 360.0f;
+        }
+        spriteComponent->SetRotation(currentAngle);
+        
     }
-    spriteComponent->SetRotation(currentAngle);
 
-
-    hitbox->Update(deltaTime_);
-
+   // hitbox->Update(deltaTime_);
 
 }
 

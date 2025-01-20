@@ -12,6 +12,7 @@
 //------------------------------------------------------------------------
 #include "Scene0.h"
 #include "Scene1.h"
+#include "Scene2.h"
 
 //------------------------------------------------------------------------
 // Example data....
@@ -70,7 +71,7 @@ void Init()
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);  // Redirect stdout to the console
 	// Initialize with Scene0
-	currentScene = new Scene1();
+	currentScene = new Scene2();
 	currentScene->Init();
 
 	App::PlaySound(".\\TestData\\BackGroundMusic.mp3", true);

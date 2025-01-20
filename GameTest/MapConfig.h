@@ -2,8 +2,8 @@
 #include <vector>
 
 /// <summary>
-/// This class is where I will store the array info of each map and I can'Parse' with TileMap class
-/// Pretty brute force :o
+/// This class is where I will store the array info of each map and I can 'Parse' with TileMap class
+/// Later Edit: I'm an idiot I could've used Text file and parse it. 
 /// </summary>
 class MapConfigs
 {

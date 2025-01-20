@@ -79,12 +79,12 @@ void Scene1::Shutdown()
 
 bool Scene1::IsVictoryConditionMet()
 {
-	//if (fabs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos())) < 0.01f) {
-	//	//std::cout << "Ball in the Hole!";
-	//	return true;
-	//}
-	//else {
-	//	return false;
-	//}
+	if (fabs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos())) < 0.01f) {
+		std::cout << "Ball in the Hole!";
+		return false;
+	}
+	else {
+		return false;
+	}
 	return false;
 }

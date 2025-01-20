@@ -164,6 +164,37 @@ void TileMap::CreateTile(int x, int y, TileType type)
     }
     break;
 
+    case TileType::RampTile:
+    {
+        delete tile;
+        RotatingObstacle* ramp = new RotatingObstacle(nullptr, camera);
+        ramp->OnCreate();
+        ramp->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        ramp->SetRotationSpeed(0.0f);  // Make it static
+        ramp->SetDefaultAngle(45.0f);// Set initial angle for the ramp
+        ramp->SetIsSpinning(false);
+
+        tiles.push_back(ramp);
+    
+        
+        return;
+    }
+    break;
+    case TileType::MovingPlatformTile:
+    {
+        delete tile;
+        MovingPlatform* movingPlatform = new MovingPlatform(nullptr, camera);
+        movingPlatform->OnCreate();
+        movingPlatform->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        movingPlatform->GetComponent<HitboxComponent>()->SetCenter(movingPlatform->GetPosition());
+        tiles.push_back(movingPlatform);
+
+        return;
+    }
+
+
+    break;
+
     default:
         break;
     }

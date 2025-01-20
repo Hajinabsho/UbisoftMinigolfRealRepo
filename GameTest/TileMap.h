@@ -8,6 +8,9 @@
 //Specific Tiles to Spawn
 #include "AirJumpPowerUp.h"
 #include "GravityPowerUp.h"
+#include "RotatingObstacle.h"
+#include "MovingPlatform.h"
+
 
 // Define the tile types
 enum TileType {
@@ -17,7 +20,9 @@ enum TileType {
     Hole = 3,
     Flag = 4,
     AirPowerUp = 5,
-    GravityBox = 6
+    GravityBox = 6,
+    RampTile = 7,
+    MovingPlatformTile = 8
 };
 
 class TileMap : public Actor

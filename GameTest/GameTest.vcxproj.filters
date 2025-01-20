@@ -81,6 +81,16 @@
     <ClCompile Include="RotatingObstacle.cpp">
       <Filter>MyGame\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Ramp.cpp" />
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>MyGame\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene3.cpp">
+      <Filter>MyGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2.cpp">
+      <Filter>MyGame\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -176,6 +186,16 @@
     </ClInclude>
     <ClInclude Include="RotatingObstacle.h">
       <Filter>MyGame\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Ramp.h" />
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>MyGame\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene3.h">
+      <Filter>MyGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene2.h">
+      <Filter>MyGame\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
