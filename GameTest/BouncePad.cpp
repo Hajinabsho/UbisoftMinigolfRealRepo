@@ -30,6 +30,7 @@ bool BouncePad::OnCreate()
 
 void BouncePad::OnDestroy()
 {
+
 }
 
 void BouncePad::Update(const float deltaTime_)

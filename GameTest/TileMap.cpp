@@ -218,6 +218,7 @@ void TileMap::CreateTile(int x, int y, TileType type)
 
     case TileType::IcePlatform: 
     {
+        delete tile;
         DisappearingPlatform* icePlatform = new DisappearingPlatform(nullptr, camera);
         icePlatform->OnCreate();
         icePlatform->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
@@ -230,6 +231,7 @@ void TileMap::CreateTile(int x, int y, TileType type)
     break;
     case TileType::BounceTile: 
     {
+        delete tile;
         BouncePad* bounceTile = new BouncePad(nullptr, camera);
         bounceTile->OnCreate();
         bounceTile->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));

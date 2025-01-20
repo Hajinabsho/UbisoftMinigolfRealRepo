@@ -6,6 +6,7 @@ class AirJumpPowerUp : public Collectible
 private:
     SpriteComponent* spriteComponent;
     HitboxComponent* hitbox;
+   
 
 public:
     AirJumpPowerUp(Component* parent_, Camera* camera_);
