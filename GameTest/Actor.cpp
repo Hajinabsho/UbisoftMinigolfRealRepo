@@ -13,7 +13,7 @@ Actor::~Actor() { OnDestroy(); }
 
 bool Actor::OnCreate() { return true; }
 
-void Actor::OnDestroy() { std::cout << "cleaning"; ClearComponents();}
+void Actor::OnDestroy() {  ClearComponents();}
 
 void Actor::Update(const float deltaTime_) {}
 

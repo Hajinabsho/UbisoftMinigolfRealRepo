@@ -90,7 +90,7 @@ void OnVictory()
 	currentScene->Init();
 	isTransitioning = false;
 
-	std::cout << "Next Level!: " << currentLevel << '\n';
+	//std::cout << "Next Level!: " << currentLevel << '\n';
 }
 
 //------------------------------------------------------------------------
