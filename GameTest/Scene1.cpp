@@ -79,12 +79,34 @@ void Scene1::Shutdown()
 
 bool Scene1::IsVictoryConditionMet()
 {
-	if (fabs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos())) < 0.01f) {
-		std::cout << "Ball in the Hole!";
-		return false;
-	}
-	else {
-		return false;
+	//float distanceToHole = fabs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos()));
+	//float ballSpeed = VectorMath::mag(golfBall->GetComponent<PhysicsComponent>()->GetVelocity());
+	////
+	//if (distanceToHole < 0.05f && ballSpeed < 1.0f) {  // Adjust these thresholds as needed
+	//	golfBall->StartVictoryAnimation(tileMap->GetHolePos());
+	//	return true;
+	//}
+	//return false;
+
+	//if (fabs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos())) < 0.01f) {
+	//	std::cout << "Ball in the Hole!";
+	//	return false;
+	//}
+	//else {
+	//	return false;
+	//}
+	//return false;
+
+
+	Vec2 ballToHole = golfBall->GetPosition() - tileMap->GetHolePos();  // Vector from hole to ball
+	float distanceToHole = VectorMath::mag(ballToHole);  // Actual distance between points
+	float ballSpeed = VectorMath::mag(golfBall->GetComponent<PhysicsComponent>()->GetVelocity());
+
+
+	if (distanceToHole < 1.0f && ballSpeed < 1.0f) {
+		golfBall->StartVictoryAnimation(tileMap->GetHolePos());
+		return true;
 	}
 	return false;
+
 }

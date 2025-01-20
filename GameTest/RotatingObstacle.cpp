@@ -63,5 +63,5 @@ void RotatingObstacle::Update(const float deltaTime_)
 void RotatingObstacle::Render() const
 {
     spriteComponent->Render();
-    hitbox->Render();
+  //  hitbox->Render();
 }

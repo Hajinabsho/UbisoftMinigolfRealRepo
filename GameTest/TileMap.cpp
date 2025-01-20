@@ -80,7 +80,8 @@ void TileMap::Render() const
             tile->GetComponent<SpriteComponent>()->Render();
 
             if (tile->GetComponent<HitboxComponent>()) {
-                tile->GetComponent<HitboxComponent>()->Render();
+                
+                //tile->GetComponent<HitboxComponent>()->Render();
             }
             
         }
@@ -170,6 +171,7 @@ void TileMap::CreateTile(int x, int y, TileType type)
         RotatingObstacle* ramp = new RotatingObstacle(nullptr, camera);
         ramp->OnCreate();
         ramp->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        ramp->GetComponent<HitboxComponent>()->SetCenter(ramp->GetPosition());
         ramp->SetRotationSpeed(0.0f);  // Make it static
         ramp->SetDefaultAngle(45.0f);// Set initial angle for the ramp
         ramp->SetIsSpinning(false);
@@ -241,7 +243,18 @@ void TileMap::CreateTile(int x, int y, TileType type)
         return;
     }
     break;
+    case TileType::RotatingPlatform:
+    {
+        delete tile;
+        RotatingObstacle* rotatingTile = new RotatingObstacle(nullptr, camera);
+        rotatingTile->OnCreate();
+        rotatingTile->SetPosition(PhysicsUtility::ToMeters(Vec2(worldX, worldY)));
+        rotatingTile->GetComponent<HitboxComponent>()->SetCenter(rotatingTile->GetPosition());
+        tiles.push_back(rotatingTile);
 
+        return;
+    }
+    break;
     default:
         break;
     }

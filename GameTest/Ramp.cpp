@@ -45,6 +45,6 @@ void Ramp::Update(const float deltaTime_)
 void Ramp::Render() const
 {
     spriteComponent->Render();
-    hitbox->Render();
+   // hitbox->Render();
 }
 

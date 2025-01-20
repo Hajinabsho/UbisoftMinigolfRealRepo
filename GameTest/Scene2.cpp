@@ -26,13 +26,9 @@ void Scene2::Init()
 
 
 
-	//rotatingObstacle = std::make_unique<RotatingObstacle>(nullptr, camera.get());
-	//rotatingObstacle->OnCreate();
-
 
 	//hitbox registration
 	hitboxSystem.RegisterActor(golfBall.get());
-	//hitboxSystem.RegisterActor(rotatingObstacle.get());
 
 	for (auto tile : tileMap->GetTiles())
 	{
@@ -44,7 +40,6 @@ void Scene2::Init()
 
 	hitboxSystem.AddObserver(golfBall->GetComponent<HitboxComponent>());
 
-	//App::PlaySound(".\\TestData\\GolfHitting.wav", false);
 
 }
 
@@ -55,7 +50,6 @@ void Scene2::Update(float deltaTime)
 	golfBall->Update(deltaTime);
 	tileMap->Update(deltaTime);
 
-	//rotatingObstacle->Update(deltaTime);
 
 	hitboxSystem.updateActor(*golfBall);
 }
@@ -67,7 +61,6 @@ void Scene2::Render()
 
 	tileMap->Render();
 	golfBall->Render();
-	//rotatingObstacle->Render();
 
 }
 
@@ -79,12 +72,14 @@ void Scene2::Shutdown()
 
 bool Scene2::IsVictoryConditionMet()
 {
-	if (fabs(VectorMath::mag(golfBall->GetPosition()) - VectorMath::mag(tileMap->GetHolePos())) < 0.01f) {
-		std::cout << "Ball in the Hole!";
-		return false;
-	}
-	else {
-		return false;
+	Vec2 ballToHole = golfBall->GetPosition() - tileMap->GetHolePos();  // Vector from hole to ball
+	float distanceToHole = VectorMath::mag(ballToHole);  // Actual distance between points
+	float ballSpeed = VectorMath::mag(golfBall->GetComponent<PhysicsComponent>()->GetVelocity());
+
+
+	if (distanceToHole < 0.7f && ballSpeed < 0.5f) {
+		golfBall->StartVictoryAnimation(tileMap->GetHolePos());
+		return true;
 	}
 	return false;
 }

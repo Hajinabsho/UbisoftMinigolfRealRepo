@@ -97,6 +97,12 @@
     <ClCompile Include="BouncePad.cpp">
       <Filter>MyGame\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Scene4.cpp">
+      <Filter>MyGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene5.cpp">
+      <Filter>MyGame\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -208,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="BouncePad.h">
       <Filter>MyGame\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene4.h">
+      <Filter>MyGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene5.h">
+      <Filter>MyGame\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

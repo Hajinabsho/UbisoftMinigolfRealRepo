@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "DisappearingPlatform.h"
 #include "GolfBall.h"
+#include "App/SimpleSound.h"
 
 DisappearingPlatform::DisappearingPlatform(Component* parent_, Camera* camera_) : Actor(parent_, camera_)
 {
@@ -76,5 +77,8 @@ void DisappearingPlatform::StartDisappearing()
 	if (!isDisappearing) {
 		isDisappearing = true;
 		disappearTimer = 0.0f;
+        CSimpleSound::GetInstance().StartSound(".\\TestData\\blockExplosion.mp3");
+        
 	}
+
 }

@@ -14,8 +14,8 @@ private:
     float disappearTimer = 0.0f;
     float reappearTimer = 0.0f;
 
-    float timeTillDisappear = 0.5f;
-    float timeTIllReappear = 3.0f;
+    float timeTillDisappear = 0.2f;
+    float timeTIllReappear = 10.0f;
 
 public:
     DisappearingPlatform(Component* parent_, Camera* camera_);

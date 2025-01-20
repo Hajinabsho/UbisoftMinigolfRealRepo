@@ -40,5 +40,8 @@ public:
 	void Render() override;
 	void Shutdown() override;
 	bool IsVictoryConditionMet() override;
+
+	GolfBall* GetGolfBall() override { return golfBall.get(); }
+
 };
 

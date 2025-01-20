@@ -33,11 +33,11 @@ private:
 
     //Implmenting double hit
     int airHits = 0;
-    int maxAirHits = 5;
+    int maxAirHits = 1;
 
     //For Respawn System
     Vec2 spawnPoint;
-    float outOfBoundsY = 15.0f;
+    float outOfBoundsY = 25.0f;
 
     //score
     int totalHits;
@@ -50,6 +50,10 @@ private:
     
     bool isGameStarted = false;
 
+    //Victory animation
+    bool isVictoryAnimation = false;
+    float currentScale = 0.5f;
+    float x = 0;
 
 public:
     GolfBall(Component* parent_);
@@ -78,6 +82,6 @@ public:
 
     void StartGame() { isGameStarted = true; }
 
-
+    void StartVictoryAnimation(const Vec2& holePos);
 };
 

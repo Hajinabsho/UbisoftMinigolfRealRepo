@@ -34,7 +34,7 @@ bool GolfBall::OnCreate()
 	physics->SetVelocity(Vec2(0.0f, 1.0f));
 	physics->SetGravity(true);
 
-	hitbox = new HitboxComponent(this, 1.0f);
+	hitbox = new HitboxComponent(this, 0.8f);
 	hitbox->SetActive(true);
 	//hitbox->SetDimensions(Vec2(1.0f, 1.0f));
 
@@ -67,11 +67,10 @@ void GolfBall::Update(const float deltaTime_)
 
 	hitbox->Update(deltaTime_);
 	physics->Update(deltaTime_);
-
 	
 
 
-	// Check for out of bounds
+	// Check for out of bounds Respawning mechanic
 	if (position.y < -outOfBoundsY) {
 		Respawn();
 		return;
@@ -81,7 +80,7 @@ void GolfBall::Update(const float deltaTime_)
 		return;
 	}
 
-
+	//Reset airhit when stinll
 	if (physics->IsStopped()) {
 		airHits = 0;
 	}
@@ -170,8 +169,31 @@ void GolfBall::Update(const float deltaTime_)
 		}
 	}
 
-
+	//Debug mode
+	if (App::IsKeyPressed('C'))
+	{
+		maxAirHits = 10;
+	}
+	//Reset key
+	if (App::IsKeyPressed('R'))
+	{
+		Respawn();
+	}
 	
+	//This is the Animation to simulate ball going into hole
+	if (isVictoryAnimation) {
+		currentScale = currentScale - (0.5 * deltaTime_ * 0.001f);
+		if (currentScale < 0.0f) {
+			currentScale = 0.0f;
+		}
+		x++;
+		spriteComponent->SetRotation(x);
+		spriteComponent->SetScale(currentScale);
+		// Skip normal update when in victory animation
+		return;  
+	}
+
+
 }
 
 void GolfBall::Render() const
@@ -189,11 +211,19 @@ void GolfBall::Render() const
 		
 		RenderDragLine();
 	}
-	std::string hitText = "Total Hits: " + std::to_string(totalHits);
+	std::string hitText = "This Level Total Hits: " + std::to_string(totalHits);
 	App::Print(100, 100, hitText.c_str());
 
 	std::string maxAirHitText = "Max Air Hit: " + std::to_string(maxAirHits - 1);
 	App::Print(100, 150, maxAirHitText.c_str());
+
+	std::string currentAirHitText = "Current Airhit: " + std::to_string(airHits-1);
+	if (airHits > 1) {
+		App::Print(100, 200, currentAirHitText.c_str());
+	}
+	else {
+		App::Print(100, 200, "Current Airhit: ");
+	}
 }
 
 void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
@@ -207,14 +237,18 @@ void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
 	}
 	if (DisappearingPlatform* platform = dynamic_cast<DisappearingPlatform*>(&otherActor))
 	{
-		if (position.y > platform->GetPosition().y) {  
-			platform->StartDisappearing();
-		}
+		//if (position.y > platform->GetPosition().y) {  
+		//}
+		//make it disappear if collision
+		platform->StartDisappearing();
+
 		
 	}
 	if (BouncePad* bouncePad = dynamic_cast<BouncePad*>(&otherActor))
 	{
 		physics->SetVelocity(Vec2(physics->GetVelocity().x, physics->GetVelocity().y + bouncePad->GetBounceForce()));
+		CSimpleSound::GetInstance().StartSound(".\\TestData\\BouncePad.mp3");
+		airHits = 0;
 	}
 
 
@@ -334,5 +368,13 @@ void GolfBall::BallStrike(const Vec2& hitforce_)
 		CSimpleSound::GetInstance().StartSound(".\\TestData\\GolfAirHit.mp3");
 
 	}
+}
+
+void GolfBall::StartVictoryAnimation(const Vec2& holePos)
+{
+	isVictoryAnimation = true;
+	SetPosition(holePos);  
+	physics->SetVelocity(Vec2(0.0f, 0.0f)); 
+	physics->SetGravity(false);  
 }
 

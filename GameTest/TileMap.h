@@ -12,6 +12,7 @@
 #include "MovingPlatform.h"
 #include "DisappearingPlatform.h"
 #include "BouncePad.h"
+#include "RotatingObstacle.h"
 
 // Define the tile types
 enum TileType {
@@ -26,6 +27,7 @@ enum TileType {
     MovingPlatformTile = 8,
     IcePlatform = 9,
     BounceTile = 10,
+    RotatingPlatform = 11
 };
 
 class TileMap : public Actor

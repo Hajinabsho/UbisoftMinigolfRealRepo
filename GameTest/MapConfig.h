@@ -3,7 +3,7 @@
 
 /// <summary>
 /// This class is where I will store the array info of each map and I can 'Parse' with TileMap class
-/// Later Edit: I'm an idiot I could've used Text file and parse it. 
+/// Later Edit: I'm an idiot I could've used Text file and parse it. But this works
 /// </summary>
 class MapConfigs
 {
@@ -15,7 +15,8 @@ public:
     static  std::vector<std::vector<int>> Level1();
     static  std::vector<std::vector<int>> Level2();
     static  std::vector<std::vector<int>> Level3();
-
+    static  std::vector<std::vector<int>> Level4();
+    static  std::vector<std::vector<int>> Level5();
 
 };
 

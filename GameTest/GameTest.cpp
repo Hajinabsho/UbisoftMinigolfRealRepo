@@ -13,16 +13,24 @@
 #include "Scene0.h"
 #include "Scene1.h"
 #include "Scene2.h"
-
+#include "Scene3.h"
+#include "Scene4.h"
+#include "Scene5.h"
 //------------------------------------------------------------------------
 // Example data....
 //------------------------------------------------------------------------
 //Since I'm not allow to change Main file, currently main is hardcoded to call game test. I will just use
 //Game Test file as a Scene Manager in this case for better structure and creation of multiple Scene
 Scene* currentScene = nullptr;
-int currentLevel = 1;
+int currentLevel = 0;
 bool isTransitioning;
 bool pendingTransition;
+
+bool victoryTriggered = false;
+float victoryTimer = 0.0f;
+float victoryDelay = 3.0f;
+int totalHits = 0;
+int totalLevel = 5;
 
 void LoadLevel(int level)
 {
@@ -36,12 +44,27 @@ void LoadLevel(int level)
 	// Load  scene based on level
 	switch (level) {
 	case 1:
-		currentScene = new Scene1();
+		currentScene = new Scene0();
 		break;
 	case 2:
 		currentScene = new Scene1();
 		break;
 
+	case 3:
+		currentScene = new Scene2();
+		break;
+
+	case 4:
+		currentScene = new Scene3();
+		break;
+
+	case 5:
+		currentScene = new Scene4();
+		break;
+		
+	case 0:
+		currentScene = new Scene5();
+		break;
 	default:
 		// Game complete or return to menu
 
@@ -52,9 +75,16 @@ void LoadLevel(int level)
 
 void OnVictory()
 {
-	//pendingTransition = true;
-
-	currentLevel++;
+	if (currentScene->GetGolfBall()) {
+		totalHits += currentScene->GetGolfBall()->GetTotalHits();
+		
+	}
+	if (currentLevel < totalLevel) {
+		currentLevel++;
+	}
+	else {
+		currentLevel = 0;
+	}
 	isTransitioning = true;
 	LoadLevel(currentLevel);
 	currentScene->Init();
@@ -71,7 +101,7 @@ void Init()
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);  // Redirect stdout to the console
 	// Initialize with Scene0
-	currentScene = new Scene2();
+	currentScene = new Scene5();
 	currentScene->Init();
 
 	App::PlaySound(".\\TestData\\BackGroundMusic.mp3", true);
@@ -121,10 +151,27 @@ void Update(const float deltaTime)
 		}
 
 
-		if (currentScene->IsVictoryConditionMet())
-		{
-			OnVictory();
+		// Check for victory
+		if (!victoryTriggered && currentScene->IsVictoryConditionMet()) {
+			
+			victoryTriggered = true;
+			victoryTimer = 0.0f;
+			CSimpleSound::GetInstance().StartSound(".\\TestData\\LevelClear.wav");  
+			return;
 		}
+
+		// Handle victory delay
+		if (victoryTriggered) {
+			victoryTimer += deltaTime * 0.001f;  
+			if (victoryTimer >= victoryDelay) {
+				OnVictory();
+				victoryTriggered = false;  
+			}
+		}
+		//if (currentScene->IsVictoryConditionMet())
+		//{
+		//	OnVictory();
+		//}
 	}
 
 }
@@ -142,8 +189,15 @@ void Render()
 	if (!isTransitioning) {
 		if (currentScene) {
 			currentScene->Render();
+
+			if (victoryTriggered) {
+				App::Print(400, 300, "Level Complete!");
+			}
 		}
 	}
+	
+	std::string gameTotalHit = "Game Total Hits: " + std::to_string(totalHits);
+	App::Print(700, 700, gameTotalHit.c_str());
 
 }
 //------------------------------------------------------------------------
