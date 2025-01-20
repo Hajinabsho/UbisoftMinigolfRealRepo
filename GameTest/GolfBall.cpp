@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GolfBall.h"
 #include "Collectible.h"
+#include "App/SimpleSound.h"
+
 
 GolfBall::GolfBall(Component* parent_) : Actor(parent_)
 {
@@ -126,8 +128,8 @@ void GolfBall::Update(const float deltaTime_)
 					// Only hit if we have some meaningful drag distance
 					if (dragDistance > 0.01f) {
 						Vec2 hitDirection = VectorMath::normalize(dragVector);
-						
-						physics->HitBall(hitDirection * (power * hitForce));
+						BallStrike(hitDirection * (power * hitForce));
+						//physics->HitBall(hitDirection * (power * hitForce));
 						totalHits++;
 						if (!physics->IsStopped()) {
 							airHits++;
@@ -136,7 +138,7 @@ void GolfBall::Update(const float deltaTime_)
 
 					//std::cout << "relased" << '\n';
 					isDragging = false;
-
+					
 				}
 			}
 		//}
@@ -179,6 +181,7 @@ void GolfBall::OnCollision(Actor& actor, Actor& otherActor)
 	{
 		collectible->OnCollect(this);
 		
+
 		return;
 	}
 
@@ -278,5 +281,13 @@ void GolfBall::Respawn()
 	physics->SetGravitySign(-1);
 	isDragging = false;
 	airHits = 0;
+}
+
+void GolfBall::BallStrike(const Vec2& hitforce_)
+{
+	physics->HitBall(hitforce_);
+
+
+	CSimpleSound::GetInstance().StartSound(".\\TestData\\GolfHitting.wav");
 }
 

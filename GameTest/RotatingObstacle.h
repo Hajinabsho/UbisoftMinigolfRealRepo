@@ -20,6 +20,9 @@ public:
 	bool OnCreate() override;
 	void OnDestroy() override;
 	void Update(const float deltaTime_) override;
+	void Render() const override;
+
+
 	void SetRotationSpeed(float speed) { rotationSpeed = speed; }
 };
 

@@ -22,7 +22,7 @@ private:
 	float radius; 
 	bool isActive;
 	ColliderType colliderType;
-
+	float angle = 0.0f;
 
 	// Private collision check methods
 	bool CheckBoxBox(const HitboxComponent* other, const Vec2& myPos, const Vec2& otherPos) const;
@@ -54,6 +54,8 @@ public:
 	void SetCenter(const Vec2& pos) { center = pos; }
 	float GetRadius() const { return radius; }
 	void SetRadius(float r) { radius = r; }
+	void SetAngle(float newAngle) { angle = newAngle; }
+	float GetAngle() const { return angle; }
 
 	// Observer interface
 	virtual void OnNotify(Actor& actor, Actor& otherActor) override;

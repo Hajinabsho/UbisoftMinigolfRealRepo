@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "MapConfig.h"
 #include "AirJumpPowerUp.h"
+#include "RotatingObstacle.h"
 
 class Scene1 : public Scene
 {
@@ -28,7 +29,7 @@ class Scene1 : public Scene
 	std::unique_ptr<GolfBall> golfBall;
 	std::unique_ptr<Camera> camera;
 	std::unique_ptr<AirJumpPowerUp> airJumpPowerUp;
-
+	std::unique_ptr<RotatingObstacle> rotatingObstacle;
 
 
 	HitboxSystem hitboxSystem;

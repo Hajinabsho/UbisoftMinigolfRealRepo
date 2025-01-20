@@ -203,6 +203,7 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsUtility.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="RotatingObstacle.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene0.h" />
     <ClInclude Include="Scene1.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsUtility.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="RotatingObstacle.cpp" />
     <ClCompile Include="Scene0.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />

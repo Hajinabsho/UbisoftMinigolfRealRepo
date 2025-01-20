@@ -78,6 +78,9 @@
     <ClCompile Include="GravityPowerUp.cpp">
       <Filter>MyGame\Actors\Collectible</Filter>
     </ClCompile>
+    <ClCompile Include="RotatingObstacle.cpp">
+      <Filter>MyGame\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -170,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="GravityPowerUp.h">
       <Filter>MyGame\Actors\Collectible</Filter>
+    </ClInclude>
+    <ClInclude Include="RotatingObstacle.h">
+      <Filter>MyGame\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

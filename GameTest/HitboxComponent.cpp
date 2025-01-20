@@ -4,15 +4,15 @@
 
 bool HitboxComponent::CheckBoxBox(const HitboxComponent* other, const Vec2& myPos, const Vec2& otherPos) const
 {
-    //AABB
-    //Compare min and max bound of x and y of two boxes and check overlap
+    ////AABB
+    ////Compare min and max bound of x and y of two boxes and check overlap
     Vec2 myMin = myPos + center - dimensions * 0.5f;
     Vec2 myMax = myPos + center + dimensions * 0.5f;
     Vec2 otherMin = otherPos + other->center - other->dimensions * 0.5f;
     Vec2 otherMax = otherPos + other->center + other->dimensions * 0.5f;
 
     return (myMin.x <= otherMax.x && myMax.x >= otherMin.x &&
-        myMin.y <= otherMax.y && myMax.y >= otherMin.y);
+    myMin.y <= otherMax.y && myMax.y >= otherMin.y);
 
 }
 
@@ -29,33 +29,41 @@ bool HitboxComponent::CheckSphereBox(const HitboxComponent* sphere, const Hitbox
 {
     //Spehre and Box
     //Find closest point from the box to the circle and compare with the radius
-
-    // Calculate the box and circle positions
+    
     Vec2 boxCenter = boxPos + box->center;
     Vec2 circleCenter = spherePos + sphere->center;
 
-    // Calculate the closest point on the box to the circle's center
+    // Transform circle's center into box's local space (undo rotation)
+    float cosa = cos(-box->angle);  // Negative angle to undo rotation
+    float sina = sin(-box->angle);
+
+    // Translate circle to origin relative to box center
+    Vec2 localCirclePos;
+    localCirclePos.x = cosa * (circleCenter.x - boxCenter.x) - sina * (circleCenter.y - boxCenter.y);
+    localCirclePos.y = sina * (circleCenter.x - boxCenter.x) + cosa * (circleCenter.y - boxCenter.y);
+
+    // Find closest point in box space (now aligned with axes)
     Vec2 closest;
-    closest.x = circleCenter.x;
-    if (circleCenter.x < boxCenter.x - box->dimensions.x / 2) {
-        closest.x = boxCenter.x - box->dimensions.x / 2;
+    closest.x = localCirclePos.x;
+    if (localCirclePos.x < -box->dimensions.x / 2) {
+        closest.x = -box->dimensions.x / 2;
     }
-    else if (circleCenter.x > boxCenter.x + box->dimensions.x / 2) {
-        closest.x = boxCenter.x + box->dimensions.x / 2;
-    }
-
-    closest.y = circleCenter.y;
-    if (circleCenter.y < boxCenter.y - box->dimensions.y / 2) {
-        closest.y = boxCenter.y - box->dimensions.y / 2;
-    }
-    else if (circleCenter.y > boxCenter.y + box->dimensions.y / 2) {
-        closest.y = boxCenter.y + box->dimensions.y / 2;
+    else if (localCirclePos.x > box->dimensions.x / 2) {
+        closest.x = box->dimensions.x / 2;
     }
 
-    // Calculate the vector difference between the circle's center and the closest point
-    Vec2 diff = circleCenter - closest;
+    closest.y = localCirclePos.y;
+    if (localCirclePos.y < -box->dimensions.y / 2) {
+        closest.y = -box->dimensions.y / 2;
+    }
+    else if (localCirclePos.y > box->dimensions.y / 2) {
+        closest.y = box->dimensions.y / 2;
+    }
 
-    // Check if the distance is less than the circle's radius
+    // Get distance in local space
+    Vec2 diff = localCirclePos - closest;
+
+    // No need to transform back to world space for distance comparison
     return VectorMath::mag(diff) < sphere->radius;
 }
 
@@ -91,6 +99,7 @@ void HitboxComponent::Update(const float deltaTime_)
 {
     //center.print();
 
+
 }
 
 void HitboxComponent::Render() const
@@ -110,20 +119,49 @@ void HitboxComponent::Render() const
         pos = PhysicsUtility::ToPixels(worldPos);
     }
 
-    Vec2 pixelDimensions = PhysicsUtility::ToPixels(dimensions);
+    if (angle == 0) {
+        Vec2 pixelDimensions = PhysicsUtility::ToPixels(dimensions);
 
-    // Calculate corner positions
-    float left = pos.x - pixelDimensions.x / 2;
-    float right = pos.x + pixelDimensions.x / 2;
-    float top = pos.y + pixelDimensions.y / 2;
-    float bottom = pos.y - pixelDimensions.y / 2;
+        // Calculate corner positions
+        float left = pos.x - pixelDimensions.x / 2;
+        float right = pos.x + pixelDimensions.x / 2;
+        float top = pos.y + pixelDimensions.y / 2;
+        float bottom = pos.y - pixelDimensions.y / 2;
 
-    // Draw the hitbox as a rectangle using lines
-    // Draw in red color for better visibility
-    App::DrawLine(left, top, right, top, 1.0f, 0.0f, 0.0f);      // Top line
-    App::DrawLine(right, top, right, bottom, 1.0f, 0.0f, 0.0f);  // Right line
-    App::DrawLine(right, bottom, left, bottom, 1.0f, 0.0f, 0.0f); // Bottom line
-    App::DrawLine(left, bottom, left, top, 1.0f, 0.0f, 0.0f);    // Left line
+        // Draw the hitbox as a rectangle using lines. Red Color
+        App::DrawLine(left, top, right, top, 1.0f, 0.0f, 0.0f);      // Top line
+        App::DrawLine(right, top, right, bottom, 1.0f, 0.0f, 0.0f);  // Right line
+        App::DrawLine(right, bottom, left, bottom, 1.0f, 0.0f, 0.0f); // Bottom line
+        App::DrawLine(left, bottom, left, top, 1.0f, 0.0f, 0.0f);    // Left line
+    }
+    //For Rotated hitbox
+    else {
+        Vec2 pixelDimensions = PhysicsUtility::ToPixels(dimensions);
+
+        Vec2 corners[4];
+        float halfWidth = pixelDimensions.x * 0.5f;
+        float halfHeight = pixelDimensions.y * 0.5f;
+        float cosa = cos(angle);
+        float sina = sin(angle);
+
+        // Calculate four corners
+        corners[0] = Vec2(pos.x + (-halfWidth * cosa - -halfHeight * sina),
+            pos.y + (-halfWidth * sina + -halfHeight * cosa));
+        corners[1] = Vec2(pos.x + (halfWidth * cosa - -halfHeight * sina),
+            pos.y + (halfWidth * sina + -halfHeight * cosa));
+        corners[2] = Vec2(pos.x + (halfWidth * cosa - halfHeight * sina),
+            pos.y + (halfWidth * sina + halfHeight * cosa));
+        corners[3] = Vec2(pos.x + (-halfWidth * cosa - halfHeight * sina),
+            pos.y + (-halfWidth * sina + halfHeight * cosa));
+
+
+
+        // Draw lines between corners
+        App::DrawLine(corners[0].x, corners[0].y, corners[1].x, corners[1].y, 1.0f, 0.0f, 0.0f);
+        App::DrawLine(corners[1].x, corners[1].y, corners[2].x, corners[2].y, 1.0f, 0.0f, 0.0f);
+        App::DrawLine(corners[2].x, corners[2].y, corners[3].x, corners[3].y, 1.0f, 0.0f, 0.0f);
+        App::DrawLine(corners[3].x, corners[3].y, corners[0].x, corners[0].y, 1.0f, 0.0f, 0.0f);
+    }
 
 
 

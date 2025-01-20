@@ -4,7 +4,7 @@
 #include "PhysicsComponent.h"
 #include "PhysicsUtility.h"
 #include "HitboxComponent.h"
-#include "app\app.h"
+
 
 
 class GolfBall : public Actor
@@ -64,6 +64,7 @@ public:
     int getMaxAirHit() { return maxAirHits; }
     void setMaxAirHit(int airHit_) { maxAirHits = airHit_; }
 
+    void BallStrike(const Vec2& hitforce_);
 
 };
 

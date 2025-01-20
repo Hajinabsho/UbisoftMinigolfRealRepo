@@ -27,10 +27,14 @@ void Scene1::Init()
 	airJumpPowerUp = std::make_unique<AirJumpPowerUp>(nullptr, camera.get());
 	airJumpPowerUp->OnCreate();
 
+	rotatingObstacle = std::make_unique<RotatingObstacle>(nullptr, camera.get());
+	rotatingObstacle->OnCreate();
 
 
 	//hitbox registration
 	hitboxSystem.RegisterActor(golfBall.get());
+	hitboxSystem.RegisterActor(rotatingObstacle.get());
+
 	for (auto tile : tileMap->GetTiles())
 	{
 		if (tile)
@@ -40,6 +44,8 @@ void Scene1::Init()
 	}
 
 	hitboxSystem.AddObserver(golfBall->GetComponent<HitboxComponent>());
+
+	//App::PlaySound(".\\TestData\\GolfHitting.wav", false);
 
 }
 
@@ -51,6 +57,7 @@ void Scene1::Update(float deltaTime)
 	tileMap->Update(deltaTime);
 	
 	airJumpPowerUp->Update(deltaTime);
+	rotatingObstacle->Update(deltaTime);
 
 	hitboxSystem.updateActor(*golfBall);
 }
@@ -63,6 +70,7 @@ void Scene1::Render()
 	airJumpPowerUp->Render();
 	tileMap->Render();
 	golfBall->Render();
+	rotatingObstacle->Render();
 
 }
 
